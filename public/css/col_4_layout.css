@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+    .col-md-4 {
+        width: 37.33333333% !important;
+    }
+}
