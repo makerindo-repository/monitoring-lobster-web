@@ -92,7 +92,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'WQMCS') }}</title>
-    <link rel="icon" href="{{asset('images/unpad-logo.png')}}">
+    <link rel="icon" href="{{ asset('images/unpad-logo.png') }}">
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,6 +105,10 @@
     <style>
         .btn img {
             border-radius: 50%;
+        }
+
+        .navbar .dropdown-toggle::after {
+            border-top-color: white !important;
         }
     </style>
     @stack('header')
@@ -152,7 +156,7 @@
                     </div>
                 </div>
             </nav>
-            <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FB9E3A;">
                 <div class="container">
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
                         aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,8 +170,9 @@
                                         <a class="nav-link dropdown-toggle" href="#"
                                             id="navbarDropdown{{ $index }}" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="{{ $menu['icon'] }}" alt="ic">
-                                            <span>{{ $menu['slug'] }}</span>
+                                            <img src="{{ $menu['icon'] }}" alt="ic"
+                                                style="filter: brightness(0) invert(1);">
+                                            <span class="text-white">{{ $menu['slug'] }}</span>
                                         </a>
                                         <ul class="dropdown-menu shadow"
                                             aria-labelledby="navbarDropdown{{ $index }}">
@@ -181,8 +186,9 @@
                                 @else
                                     <li class="nav-item me-4">
                                         <a href="{{ $menu['route'] }}" class="nav-link">
-                                            <img src="{{ $menu['icon'] }}" alt="ic">
-                                            <span>{{ $menu['slug'] }}</span>
+                                            <img src="{{ $menu['icon'] }}" alt="ic"
+                                                style="filter: brightness(0) invert(1);">
+                                            <span class="text-white">{{ $menu['slug'] }}</span>
                                         </a>
                                     </li>
                                 @endif
