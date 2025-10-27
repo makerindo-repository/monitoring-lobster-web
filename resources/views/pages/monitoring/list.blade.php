@@ -3,7 +3,7 @@
 @push('header')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.1.0/dist/geosearch.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.1.0/dist/geosearch.css" />
 
 @endpush
 @push('style')
@@ -19,18 +19,18 @@
             top: 10px;
         }
         .leaflet-control-geosearch form input {
-    min-width: 140px;
-    width: 80%;
-    outline: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-    height: 30px;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    text-indent: 8px;
-}
+            min-width: 140px;
+            width: 80%;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            height: 30px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            text-indent: 8px;
+        }
     </style>
 @endpush
 
@@ -52,6 +52,8 @@
     </div>
 
     <div class="container mb-5">
+        <h4 class="fw-bold mb-4">Monitoring</h4>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="toggle-switch">
@@ -86,8 +88,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="fw-bold mb-0">Informasi</h5>
-                                <p class="text-gray fs-7 mb-2">Detail Informasi Edge</p>
+                                <h5 class="fw-bold mb-2"><i class="fa-solid fa-circle-info me-1" style="color: #FB9E3A;"></i> Informasi Edge</h5>
                                 <div class="row">
                                     <div class="col-md-12" id="konten-detail-informasi-edge">
                                         <div class="text-center">
@@ -105,8 +106,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="fw-bold mb-0">IOT Node</h5>
-                                <p class="text-gray fs-7 mb-2">Daftar IOT Node yang sudah diaktivasi</p>
+                                <h5 class="fw-bold mb-0"><i class="fa-solid fa-circle-info me-1" style="color: #FB9E3A;"></i> Daftar IoT Node</h5>
+                                <p class="text-gray fs-7 mb-2">Daftar IoT Node yang sudah diaktivasi</p>
                                 <div class="table-responsive">
                                     <table id="table-iot-nodes" class="table" style="font-size:.85em;">
                                         <thead>
@@ -151,7 +152,7 @@
         // initialize leaflet map
         function initMap() {
             let centerPoint = [
-                -1.3450239,118.8061376
+                -1.3450239, 118.8061376
             ]
 
             let marker = L.marker(centerPoint)
@@ -166,23 +167,23 @@
                 ]
             }).setView(centerPoint, 4);
             var provider = new GeoSearch.OpenStreetMapProvider();
-        const searchControl = new GeoSearch.GeoSearchControl({
-            provider: provider,
-            style: 'button',
-            showMarker: false,
-            showPopup: false,
-            autoClose: true,
-            retainZoomLevel: false,
-            animateZoom: true,
-            keepResult: true,
-            updateMap: true,
-            searchLabel: 'Cari Lokasi',
-            popupFormat: ({
-                query,
-                result
-            }) => result.label,
-        });
-        searchControl.addTo(map);
+            const searchControl = new GeoSearch.GeoSearchControl({
+                provider: provider,
+                style: 'button',
+                showMarker: false,
+                showPopup: false,
+                autoClose: true,
+                retainZoomLevel: false,
+                animateZoom: true,
+                keepResult: true,
+                updateMap: true,
+                searchLabel: 'Cari Lokasi',
+                popupFormat: ({
+                    query,
+                    result
+                }) => result.label,
+            });
+            searchControl.addTo(map);
 
             fetch("{{ route('edges-marker') }}")
                 .then(response => response ? response.json() : response)
@@ -197,7 +198,7 @@
                                 .coordinates[0];
                             layer.on('click', function() {
                                 setDetail(feature.properties);
-                                setNodeList(feature.properties.iot_nodes,latlng);
+                                setNodeList(feature.properties.iot_nodes, latlng);
                             })
                         }
                     }).addTo(map)
@@ -240,8 +241,8 @@
                     <td><b>Petugas</b></td>
                 </tr>
             </table>
-            <span class="fw-bolder d-inline-block fs-7 ms-1" data-bs-toggle="modal" data-bs-target="#modalDetailEdge" style="color:#1e88e5; cursor: pointer;">Lihat lebih lengkap</span>
-        `;
+            <span class="btn fs-7 ms-1 mt-2 text-white rounded-3" data-bs-toggle="modal" data-bs-target="#modalDetailEdge" style="background-color: #FB9E3A;">Lihat lebih lengkap <i class="fa-solid fa-circle-arrow-right ms-1"></i></span>
+            `;
 
             document.querySelector('#modalDetailEdge .modal-body')
                 .innerHTML = `
@@ -317,28 +318,27 @@
         }
 
         function setNodeList(data, latlng) {
-    let raw = '';
-    let currentDate = new Date();
+            let raw = '';
+            let currentDate = new Date();
 
-    let formattedDate = currentDate.toISOString().split('T')[0];
+            let formattedDate = currentDate.toISOString().split('T')[0];
 
-    data.filter(d => d.activated_at).forEach((r, i) => {
-        raw += `
+            data.filter(d => d.activated_at).forEach((r, i) => {
+                raw += `
             <tr>
                 <td>${i + 1}</td>
-                <td>
-                    ${r.serial_number};
-                    <small class="text-gray">Node-${r.edge_computing_node}</small>
+                <td class="text-gray">
+                    ${r.serial_number} : 
+                    <small class="text-dark fw-bold">Node-${r.edge_computing_node}</small>
                 </td>
                 <td>
-                    <a href="{{ route('monitoring.live') }}?n=${r.serial_number}&date=${formattedDate}&latlng=${latlng}" target="_blank" rel="nofollow" class="btn btn-sm fw-bold text-white" style="font-size:.9em !important; background: #1e88e5;">Lihat Detail</a>
+                    <a href="{{ route('monitoring.live') }}?n=${r.serial_number}&date=${formattedDate}&latlng=${latlng}" target="_blank" rel="nofollow" class="btn btn-sm fw-bold text-white rounded-3" style="font-size:.9em !important; background: #FB9E3A;">Lihat Detail <i class="fa-solid fa-circle-arrow-right ms-1"></i></a>
                 </td>
             </tr>
         `;
-    });
+            });
 
-    document.getElementById('table-iot-nodes').innerHTML = raw;
-}
-
+            document.getElementById('table-iot-nodes').innerHTML = raw;
+        }
     </script>
 @endpush
