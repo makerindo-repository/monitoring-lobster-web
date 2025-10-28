@@ -26,80 +26,84 @@
 
 @section('content')
     <div class="container">
+        <h4 class="fw-bold mb-4">Dashboard</h4>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="card" style="background: #373B8E">
+                        <div class="card">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total Edge Computing</small>
                                     <div class="col-md-6">
-                                        <h2 class="fw-bold text-white">
+                                        <h2 class="fw-bold">
                                             {{ $statistic['edge'] }}
                                             <small style="font-size:.5em; font-weight:normal;">unit</small>
                                         </h2>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h2 class="fw-bold text-white">
-                                            1
-                                            <small style="font-size:.5em; font-weight:normal;">Aktif</small>
-                                        </h2>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-server my-auto"
+                                            style="color: #FB9E3A; background-color: rgba(251, 158, 58, 0.3);"></i>
                                     </div>
                                 </div>
-                                <small class="text-white">Total Edge Computing</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card" style="background: #25275F ">
+                        <div class="card">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total IoT Node</small>
                                     <div class="col-md-6">
-                                        <h2 class="fw-bold text-white">
+                                        <h2 class="fw-bold">
                                             {{ $statistic['node'] }}
                                             <small style="font-size:.5em; font-weight:normal;">unit</small>
                                         </h2>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h2 class="fw-bold text-white">
-                                            {{ $statistic['node_active'] }}
-                                            <small style="font-size:.5em; font-weight:normal;">Aktif</small>
-                                        </h2>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-microchip my-auto"
+                                            style="color: #3A3DFB; background-color: rgba(58, 61, 251, 0.3);"></i>
                                     </div>
                                 </div>
-                                <small class="text-white">Total IoT Node</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card" style="background: #12142F">
+                        <div class="card">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total Provinsi Terdata</small>
                                     <div class="col-md-6">
-                                        <h2 class="fw-bold text-white">
+                                        <h2 class="fw-bold">
                                             {{ $statistic['region_count'] }}
                                             <small style="font-size:.5em; font-weight:normal;">Prov</small>
                                         </h2>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h2 class="fw-bold text-white">
-                                            {{ $statistic['city_count'] }}
-                                            <small style="font-size:.5em; font-weight:normal;">Kota</small>
-                                        </h2>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-map my-auto"
+                                            style="color: #00d034; background-color: rgb(0, 208, 52, 0.3);"></i>
                                     </div>
                                 </div>
-                                <small class="text-white">Total Terdata</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card" style="background: 	#000000">
+                        <div class="card">
                             <div class="card-body">
-                                <h2 class="fw-bold text-white">
-                                    {{ $statistic['client'] }}
-                                    <small style="font-size:.5em; font-weight:normal;">data</small>
-                                </h2>
-                                <small class="text-white">Total Client</small>
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total Kota Terdata</small>
+                                    <div class="col-md-6">
+                                        <h2 class="fw-bold">
+                                            {{ $statistic['city_count'] }}
+                                            <small style="font-size:.5em; font-weight:normal;">Kota</small>
+                                        </h2>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-city my-auto"
+                                            style="color: #d00000; background-color: rgb(208, 0, 0, 0.3)"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,13 +112,25 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-12 col-md-3">
+            <div class="col-12">
+                <div class="card p-3 gap-2">
+                    <h6 class="fw-bold">Kamera Real-Time</h6>
+                    <div class="w-100">
+                        <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture" class="w-100"
+                            style="object-fit: contain;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 g-3">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="node">Pilih Node</label>
+                            <label for="node" class="fw-bolder mb-2">Pilih Node</label>
                             <select class="form-select" name="node" placeholder="Pilih Node" autocomplete="off">
-                                <option value="">Select Node</option>
+                                <option value="">Pilih Node</option>
                                 @foreach ($nodes as $serial_number)
                                     <option value="{{ $serial_number }}">{{ $serial_number }}</option>
                                 @endforeach
@@ -123,7 +139,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-9">
+            <div class="col-12">
                 @php
                     $sensors = [
                         0 => [
