@@ -16,132 +16,126 @@
 
 @section('content')
     <div class="container mb-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="picture-wrapper">
-                                    <img src="{{ asset($data->picture ?? 'images/default_404.png') }}" alt="picture"
-                                        class="picture" width="100%">
+        <h4 class="fw-bold mb-4">Detail Edge Computing</h4>
+        <div class="card p-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-0">
+                                <div class="card-body">
+                                    <div class="picture-wrapper">
+                                        <img src="{{ asset($data->picture ?? 'images/default_404.png') }}" alt="picture"
+                                            class="picture" width="100%">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card" style="font-size:.9em;">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <h5
-                                        class="badge rounded-pill bg-outline-{{ $data->activated_by ? 'success' : 'warning' }}">
-                                        {{ $data->activated_by ? 'Sudah' : 'Belum' }} diaktivasi
-                                    </h5>
-                                    <table class="table">
-                                        <tr>
-                                            <td width="28%">Nomor Serial</td>
-                                            <td width="1%">:</td>
-                                            <td class="fw-bold">{{ $data->serial_number }}</td>
-                                        </tr>
 
-                                        <tr>
-                                            <td>Memory</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->memory }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Total IOT Node</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->iot_nodes->count() }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Maksimal IOT Node</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->maximum_iot }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Processor Clock Speed</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->processor_clock_speed }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nama OS</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->os }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nama Framework</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->framework }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sumber Daya</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->power_supply }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tegangan</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->voltage }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>IP Edge</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->ip }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>IP Gateway</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">{{ $data->ip_gateway }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Diaktivasi Tanggal</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Nomor Serial</p>
+                                            <p class="fw-bold">{{ $data->serial_number }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Memory</p>
+                                            <p class="fw-bold">{{ $data->memory }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Total IoT Node</p>
+                                            <p class="fw-bold">{{ $data->iot_nodes->count() }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Maksimal IoT Node</p>
+                                            <p class="fw-bold">{{ $data->maximum_iot }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Processor Clock Speed</p>
+                                            <p class="fw-bold">{{ $data->processor_clock_speed }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Nama OS</p>
+                                            <p class="fw-bold">{{ $data->os }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Nama Framework</p>
+                                            <p class="fw-bold">{{ $data->framework }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Sumber Daya</p>
+                                            <p class="fw-bold">{{ $data->power_supply }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Tegangan</p>
+                                            <p class="fw-bold">{{ $data->voltage }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">IP Edge</p>
+                                            <p class="fw-bold">{{ $data->ip }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">IP Gateway</p>
+                                            <p class="fw-bold">{{ $data->ip_gateway }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Diaktivasi Tanggal</p>
+                                            <p class="fw-bold">
                                                 @if ($data->activated_at)
                                                     {{ $data->activated_at }}
                                                 @else
                                                     [N/A]
                                                 @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dipasang Tanggal</td>
-                                            <td>:</td>
-                                            <td class="fw-bold"> @if($data->installed_at)
-                                                {{ $data->installed_at }}
-                                            @else
-                                                [N/A]
-                                            @endif</td>
-                                        </tr>
-                                    </table>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Dipasang Tanggal</p>
+                                            <p class="fw-bold">
+                                                @if ($data->installed_at)
+                                                    {{ $data->installed_at }}
+                                                @else
+                                                    [N/A]
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {{-- <div class="col-md-12 mt-4">
-                    <div class="card">
-                        <div class="card-body p-0">
-                            <div id="map" class="map"></div>
+                        {{-- <div class="col-md-12 mt-4">
+                            <div class="card">
+                                <div class="card-body p-0">
+                                    <div id="map" class="map"></div>
+                                </div>
+                            </div>
+                        </div> --}}
+
+                        {{-- Buttons --}}
+                        <div class="col-md-12 mt-4 text-end">
+                            <a href="{{ route('edge-computing.index') }}"
+                                class="btn rounded-3 text-secondary border-secondary px-3"
+                                style="background-color: #F4F4F4;">Kembali</a>
+                            <form id="Hapus{{ $data->id }}" action="{{ route($route . 'destroy', $data->id) }}"
+                                method="POST" class="d-inline-block">
+                                @method('DELETE')
+                                @csrf
+                                <button id="Hapus" type="submit" class="btn btn-danger px-3 ms-2"
+                                    onclick="deleteActivity({{ $data->id }})">
+                                    Hapus
+                                </button>
+                            </form>
+                            <a href="{{ route($route . 'edit', $data->id) }}" class="btn ms-2 px-3 text-white"
+                                style="background-color: #FB9E3A;">Edit Data</a>
                         </div>
-                    </div>
-                </div> --}}
 
-                    <div class="col-md-12 mt-4 text-end">
-                        <a href="{{ route($route . 'edit', $data->id) }}" class="btn btn-primary me-2">Edit Data</a>
-                        <form id="Hapus{{ $data->id }}" action="{{ route($route . 'destroy', $data->id) }}" method="POST" class="d-inline-block">
-                            @method('DELETE')
-                            @csrf
-                            <button id="Hapus" type="submit" class="btn btn-outline-danger" onclick="deleteActivity({{$data->id}})">
-                                Hapus
-                            </button>                        </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -157,7 +151,7 @@
             });
         }
 
-        @if(session()->has('Gagal'))
+        @if (session()->has('Gagal'))
             Notif();
         @endif
     </script>
