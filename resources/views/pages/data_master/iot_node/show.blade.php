@@ -23,41 +23,37 @@
 
 @section('content')
     <div class="container mb-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="picture-wrapper">
-                                    <img src="{{ asset($data->picture ?? 'images/default_404.png') }}" alt="picture"
-                                        class="picture" width="100%">
+        <h4 class="fw-bold mb-4">Detail IoT Node</h4>
+        <div class="card p-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-0">
+                                <div class="card-body">
+                                    <div class="picture-wrapper">
+                                        <img src="{{ asset($data->picture ?? 'images/default_404.png') }}" alt="picture"
+                                            class="picture" width="100%">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card" style="font-size:.9em;">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <h5
-                                        class="badge rounded-pill bg-outline-{{ $data->activated_by ? 'success' : 'warning' }}">
-                                        {{ $data->activated_by ? 'Sudah' : 'Belum' }} diaktivasi
-                                    </h5>
-                                    <table class="table">
-                                        <tr>
-                                            <td width="20%">Nomor Serial</td>
-                                            <td width="1%">:</td>
-                                            <td class="fw-bold">{{ $data->serial_number }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Edge Computing</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">
+
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Nomor Serial</p>
+                                            <p class="fw-bold">{{ $data->serial_number }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Edge Computing</p>
+                                            <p class="fw-bold">
                                                 @if ($data->edge_computing_id)
                                                     <a href="{{ route('edge-computing.show', $data->edge_computing_id) }}"
                                                         style="color: #0a58ca"
@@ -66,72 +62,75 @@
                                                 @else
                                                     undefined
                                                 @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Diaktivasi Oleh</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Diaktivasi Oleh</p>
+                                            <p class="fw-bold">
                                                 @if ($data->activated_by)
                                                     {{ $data->user->name }}
                                                 @else
                                                     [N/A]
                                                 @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Diaktivasi Tanggal</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Diaktivasi Tanggal</p>
+                                            <p class="fw-bold">
                                                 @if ($data->activated_at)
                                                     {{ $data->activated_at }}
                                                 @else
                                                     [N/A]
                                                 @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dipasang Tanggal</td>
-                                            <td>:</td>
-                                            <td class="fw-bold">
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="m-0 text-secondary">Dipasang Tanggal</p>
+                                            <p class="fw-bold">
                                                 @if ($data->installed_at)
                                                     {{ $data->installed_at }}
                                                 @else
                                                     [N/A]
                                                 @endif
-                                            </td>
-                                        </tr>
+                                            </p>
+                                        </div>
                                         <input id="id" value="{{ $data->edge_computing_id }}" hidden>
-                                    </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12 mt-4">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <div id="map" class="map"></div>
+                        <div class="col-md-12 mt-4">
+                            <div class="card">
+                                <div class="card-body p-0">
+                                    <div id="map" class="map"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12 mt-4 text-end">
-                        <a href="{{ route($route . 'edit', $data->id) }}" class="btn btn-primary me-2">Edit Data</a>
-                        <form action="{{ route($route . 'destroy', $data->id) }}" method="POST" class="d-inline-block"
-                            id="Hapus{{ $data->id }}">
-                            @method('DELETE')
-                            @csrf
-                            <button id="Hapus" type="submit" class="btn btn-outline-danger"
-                                onclick="deleteActivity({{ $data->id }})">
-                                Hapus
-                            </button>
-                        </form>
-                    </div>
+                        {{-- Buttons --}}
+                        <div class="col-md-12 mt-4 text-end">
+                            <a href="{{ route($route . 'index') }}"
+                                class="btn rounded-3 text-secondary border-secondary px-3"
+                                style="background-color: #F4F4F4;">Kembali</a>
+                            <form action="{{ route($route . 'destroy', $data->id) }}" method="POST" class="d-inline-block"
+                                id="Hapus{{ $data->id }}">
+                                @method('DELETE')
+                                @csrf
+                                <button id="Hapus" type="submit" class="btn btn-danger px-3 ms-2"
+                                    onclick="deleteActivity({{ $data->id }})">
+                                    Hapus
+                                </button>
+                            </form>
+                            <a href="{{ route($route . 'edit', $data->id) }}" class="btn ms-2 px-3 text-white"
+                                style="background-color: #FB9E3A;">Edit Data</a>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -144,7 +143,7 @@
             });
         }
 
-        @if(session()->has('Gagal'))
+        @if (session()->has('Gagal'))
             Notif();
         @endif
     </script>
