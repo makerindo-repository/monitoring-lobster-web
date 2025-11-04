@@ -30,7 +30,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
@@ -107,186 +107,246 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card p-3 gap-2">
-                    <h6 class="fw-bold">Kamera Real-Time</h6>
-                    <div class="w-100">
-                        <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture" class="w-100"
-                            style="object-fit: contain;">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4 g-3">
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="node" class="fw-bolder mb-2">Pilih Node</label>
-                            <select class="form-select" name="node" placeholder="Pilih Node" autocomplete="off">
-                                <option value="">Pilih Node</option>
-                                @foreach ($nodes as $serial_number)
-                                    <option value="{{ $serial_number }}">{{ $serial_number }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                @php
-                    $sensors = [
-                        0 => [
-                            'id' => 'dissolver-oxygen',
-                            'name' => 'Dissolved Oxygen',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        1 => [
-                            'id' => 'turbidity',
-                            'name' => 'Turbidity',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'NTU',
-                        ],
-                        2 => [
-                            'id' => 'salinity',
-                            'name' => 'EC/Salinity',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'PSU',
-                        ],
-                        3 => [
-                            'id' => 'cod',
-                            'name' => 'COD',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        4 => [
-                            'id' => 'ph',
-                            'name' => 'pH',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => '',
-                        ],
-                        5 => [
-                            'id' => 'orp',
-                            'name' => 'ORP',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mV',
-                        ],
-                        6 => [
-                            'id' => 'tds',
-                            'name' => 'TDS',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'ppm',
-                        ],
-                        7 => [
-                            'id' => 'nitrat',
-                            'name' => 'Nitrat',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        8 => [
-                            'id' => 'temperature-air',
-                            'name' => 'Temperature Air',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => '°C',
-                        ],
-                        9 => [
-                            'id' => 'debit-air',
-                            'name' => 'Debit Air',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'm3/s',
-                        ],
-                        10 => [
-                            'id' => 'tss',
-                            'name' => 'TSS',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        11 => [
-                            'id' => 'ni',
-                            'name' => 'Nikel',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        12 => [
-                            'id' => 'pb',
-                            'name' => 'Timbal',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        13 => [
-                            'id' => 'cd',
-                            'name' => 'Kadmium',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        14 => [
-                            'id' => 'as',
-                            'name' => 'Arsenik',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                        15 => [
-                            'id' => 'cr',
-                            'name' => 'Kromium',
-                            'value' => 0,
-                            'status' => 'average, Past 20 minutes',
-                            'satuan' => 'mg/L',
-                        ],
-                    ];
-                @endphp
-                <div class="row">
-                    @foreach ($sensors as $key => $sensor)
-                        <div class="col-12 col-md-3 mb-3">
-                            <div class="card h-100" id="status-{{ $sensor['id'] }}">
-                                <div class="card-header">
-                                    <h6 class="card-title">{{ $sensor['name'] }}</h6>
-                                </div>
-                                <div class="card-body text-center">
-                                    <span>{{ $sensor['value'] }}</span>&nbsp;{{ $sensor['satuan'] }}
-                                </div>
-                                <div class="card-footer text-muted">
-                                    <p style="font-size: 12px;">{{ $sensor['status'] }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    <div class="col-12 col-md-3 mb-3">
-                        <div class="card h-100" id="status-water-level">
-                            <div class="card-header">
-                                <h6 class="card-title">Jarak Ke Permukaann Air</h6>
-                            </div>
+                    <div class="col-md-3">
+                        <div class="card">
                             <div class="card-body">
-                                <div class="row h-100">
-                                    <div class="col-6">
-                                        <p class="cm" style="font-size: 12px;">0cm</p>
-                                        <p class="persen" style="font-size: 12px;">0%</p>
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total Keramba Jaring Apung (KJA)</small>
+                                    <div class="col-md-6">
+                                        <h2 class="fw-bold">
+                                            1
+                                            <small style="font-size:.5em; font-weight:normal;">KJA</small>
+                                        </h2>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="progress custom-progress">
-                                            <div class="progress-bar bg-info custom-progress-bar" role="progressbar"
-                                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-border-all my-auto"
+                                            style="color: #ff3fcf; background-color: rgba(255, 63, 207, 0.3)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total Lobster</small>
+                                    <div class="col-md-6">
+                                        <h2 class="fw-bold">
+                                            10
+                                            <small style="font-size:.5em; font-weight:normal;">Ekor</small>
+                                        </h2>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-shrimp my-auto"
+                                            style="color: #d00000; background-color: rgb(208, 0, 0, 0.3)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <small class="text-secondary">Total Kamera Aktif</small>
+                                    <div class="col-md-6">
+                                        <h2 class="fw-bold">
+                                            1
+                                            <small style="font-size:.5em; font-weight:normal;">Kamera</small>
+                                        </h2>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-camera my-auto"
+                                            style="color: #d00000; background-color: rgb(208, 0, 0, 0.3)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-3 gap-4 mt-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold">Kamera Real-Time</h4>
+                <span class="fw-bolder text-secondary">Terakhir diupdate: 22-11-2025 10:00</span>
+            </div>
+
+            {{-- Dropdown select camera --}}
+            <div>
+                <form action="" method="post">
+                    @csrf
+                    <label for="camera" class="form-label fw-bolder">Pilih Kamera</label>
+                    <select name="camera" id="camera" class="form-select w-50">
+                        <option value="1">Kamera 1</option>
+                        <option value="2">Kamera 2</option>
+                        <option value="3">Kamera 3</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture" class="w-100"
+                                    style="object-fit: contain;">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card px-2 py-3 border-2 gap-3">
+                                <div>
+                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                            style="color: #FB9E3A;"></i>Pemantauan Aktivitas Lobster dengan AI (Berdasarkan
+                                        Data Kamera)</h5>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Sedang Makan</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">50%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Sedang Tidur</p>
+                                            <p class="mt-1 fw-bolder fs-5 text-success">35%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Sedang Berantem</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">15%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="card px-2 py-3 border-2 gap-3">
+                                <div>
+                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                            style="color: #FB9E3A;"></i>Lokasi dan Posisi KJA</h5>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Longitude</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">107.589234&deg;</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Latitude</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">-6.872345&deg;</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Altitude</p>
+                                            <p class="mt-1 text-success fw-bolder fs-5">0m</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Pitch</p>
+                                            <p class="mt-1 text-success fw-bolder fs-5">5.23&deg;</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Roll</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb;">-2.87&deg;</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Yaw</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb;">180.45&deg;</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card px-2 py-3 border-2 gap-3">
+                                <div>
+                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                            style="color: #FB9E3A;"></i>Parameter Lingkungan</h5>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Temperature</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">28.6&deg;C</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Humidity</p>
+                                            <p class="mt-1 fw-bolder fs-5 text-success">75%RH</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Pressure</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">1008.3hPa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card px-2 py-3 border-2 gap-3">
+                                <div>
+                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                            style="color: #FB9E3A;"></i>Sensor
+                                        Kualitas Air</h5>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Temperature</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">26.4&deg;C</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Dissolved Oxygen</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">7.8mg/L</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">pH</p>
+                                            <p class="mt-1 fw-bolder fs-5 text-success">7.2pH</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Turbidity</p>
+                                            <p class="mt-1 fw-bolder fs-5 text-success">12.5NTU</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Salinity</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">31.8PSU</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Current Speed</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0.45m/s</p>
                                         </div>
                                     </div>
                                 </div>
@@ -296,196 +356,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Disolved Oxygen</h5>
-                        <p class="text-gray fs-7">Disolved Oxygen</p>
-                        <div id="DissolvedOxygen"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Turbidity</h5>
-                        <p class="text-gray fs-7">Sensor Turbidity</p>
-                        <div id="Turbidity"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Salinity</h5>
-                        <p class="text-gray fs-7">Sensor Salinity</p>
-                        <div id="Salinity"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">COD</h5>
-                        <p class="text-gray fs-7">Sensor COD</p>
-                        <div id="CodSensor"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">pH Air</h5>
-                        <p class="text-gray fs-7">Sensor pH Air</p>
-                        <div id="phAir"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Orp</h5>
-                        <p class="text-gray fs-7">OrpSensor</p>
-                        <div id="OrpSensor"></div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Tds</h5>
-                        <p class="text-gray fs-7">TdsSensor</p>
-                        <div id="TdsSensor"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Nitrat </h5>
-                        <p class="text-gray fs-7">Sensor Nitrat</p>
-                        <div id="NitratSensor"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Temperature </h5>
-                        <p class="text-gray fs-7">Sensor Suhu Air</p>
-                        <div id="TemperatureAir"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Debit Air</h5>
-                        <p class="text-gray fs-7">Sensor Debit Air</p>
-                        <div id="ArusAir"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">TSS</h5>
-                        <p class="text-gray fs-7">Sensor TSS</p>
-                        <div id="TssSensor"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Jarak Ke Permukaan Air</h5>
-                        <p class="text-gray fs-7">Sensor Jarak Ke Permukaan Air</p>
-                        <div id="TinggiAir"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Nikel</h5>
-                        <p class="text-gray fs-7">Sensor Nikel</p>
-                        <div id="nikelSensor"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Timbal</h5>
-                        <p class="text-gray fs-7">Sensor Timbal</p>
-                        <div id="timbalSensor"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Kadmium</h5>
-                        <p class="text-gray fs-7">Sensor Kadmium</p>
-                        <div id="KadmiumSensor"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Arsenik</h5>
-                        <p class="text-gray fs-7">Sensor Arsenik</p>
-                        <div id="ArsenikSensor"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Kromium
-                        </h5>
-                        <p class="text-gray fs-7">Sensor Kromium
-                        </p>
-                        <div id="KromiumSensor"></div>
-                    </div>
-                </div>
-            </div>
-            {{-- <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="fw-bold mb-0">Arsenik</h5>
-                        <p class="text-gray fs-7">Sensor Arsenik</p>
-                        <div id="ArsenikSensor"></div>
-                    </div>
-                </div>
-            </div> --}}
-        </div>
-
     </div>
-    <br><br><br>
 @endsection
 
 @push('footer')
