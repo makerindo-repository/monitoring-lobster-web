@@ -6,20 +6,91 @@
 
 @section('content')
     <div class="container">
+        <h4 class="fw-bolder mb-0">Laporan Data</h4>
+        <p class="text-gray fs-7 mb-4">Raw data Monitoring</p>
+
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <div class="card border-flat p-3 mb-4">
+                    <div class="row">
+                        <div class="col-md-">
+                            <a class="btn text-white btn-sm fw-bold" style="background: #1e88e5;" data-bs-toggle="collapse"
+                                href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                                Munculkan Filter
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="collapse" id="collapseFilter">
+                            <form action="" method="GET" id="form-filter">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="">Provinsi</label>
+                                        <select name="region_id" placeholder="Pilih Provinsi" autocomplete="off">
+                                            @foreach ($regions as $i => $region)
+                                                <option value="{{ $region->id }}"
+                                                    {{ request('region_id') == $region->id ? 'selected' : '' }}>
+                                                    {{ $region->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Kota</label>
+                                        <select name="city_id" autocomplete="off"></select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Dari Tanggal</label>
+                                        <input type="date" name="date" class="form-control"
+                                            value="{{ request('date') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Sampai Tanggal</label>
+                                        <input type="date" name="to_date" class="form-control"
+                                            value="{{ request('to_date') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Dari Jam</label>
+                                        <input type="time" name="time" class="form-control"
+                                            value="{{ request('time') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Sampai Jam</label>
+                                        <input type="time" name="to_time" class="form-control"
+                                            value="{{ request('to_time') }}">
+                                    </div>
+                                    {{-- <div class="col-md-2">
+                                            <label for="">Edge Computing</label>
+                                            <select name="edge_computing_id" class="form-select" disabled>
+                                                <option value="" disabled selected>Edge Computing tidak tersedia</option>
+                                            </select>
+                                        </div> --}}
+                                    <div class="col-md-2">
+                                        <label for="">IoT Node</label>
+                                        <select name="iot_node_id" autocomplete="off">
+                                            <option value="*">Semua</option>
+                                            @foreach ($nodes as $id => $number)
+                                                <option value="{{ $id }}">{{ $number }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-12 text-end">
+                                        <button type="submut" class="btn text-white mt-4"
+                                            style="background-color: #FB9E3A;">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="card border-flat">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="fw-bolder mb-0">Laporan Data</h5>
-                                <p class="text-gray fs-7">Raw data Monitoring</p>
-                            </div>
-                            <div>
+                        <div class="text-end">
+                            <div class="d-flex flex-column gap-3">
                                 <div class="dropdown">
-                                    <button class="btn btn-primary btn-sm fw-bold" type="button" id="dropdownMenuButton1"
+                                    <button class="btn btn-sm fw-bold text-white rounded-3 px-3" type="button"
+                                        id="dropdownMenuButton1" style="background-color: #FB9E3A;"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        Export
+                                        Export <i class="fa-solid fa-file-export ms-2"></i>
                                     </button>
                                     <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton1">
                                         <li><a class="dropdown-item" href="{{ route('report.rawMonitoring.pdf') }}"
@@ -28,79 +99,12 @@
                                                 target="_blank">Excel</a></li>
                                     </ul>
                                 </div>
+                                <a href="{{ route('report.rawMonitoring') }}"
+                                    class="fw-bold btn btn-success btn-sm px-3 w-auto ms-auto">Segarkan kembali</a>
                             </div>
+
                         </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-md-">
-                                    <a class="btn text-white btn-sm fw-bold" style="background: #1e88e5;"
-                                        data-bs-toggle="collapse" href="#collapseFilter" role="button"
-                                        aria-expanded="false" aria-controls="collapseFilter">
-                                        Munculkan Filter
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="collapse" id="collapseFilter">
-                                    <form action="" method="GET" id="form-filter">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label for="">Provinsi</label>
-                                                <select name="region_id" placeholder="Pilih Provinsi" autocomplete="off">
-                                                    @foreach ($regions as $i => $region)
-                                                        <option value="{{ $region->id }}"
-                                                            {{ request('region_id') == $region->id ? 'selected' : '' }}>
-                                                            {{ $region->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="">Kota</label>
-                                                <select name="city_id" autocomplete="off"></select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="">Dari Tanggal</label>
-                                                <input type="date" name="date" class="form-control"
-                                                    value="{{ request('date') }}">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="">Sampai Tanggal</label>
-                                                <input type="date" name="to_date" class="form-control"
-                                                    value="{{ request('to_date') }}">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="">Dari Jam</label>
-                                                <input type="time" name="time" class="form-control"
-                                                    value="{{ request('time') }}">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="">Sampai Jam</label>
-                                                <input type="time" name="to_time" class="form-control"
-                                                    value="{{ request('to_time') }}">
-                                            </div>
-                                            {{-- <div class="col-md-2">
-                                            <label for="">Edge Computing</label>
-                                            <select name="edge_computing_id" class="form-select">
-                                                <option value=""></option>
-                                            </select>
-                                        </div> --}}
-                                            <div class="col-md-2">
-                                                <label for="">IoT Node</label>
-                                                <select name="iot_node_id" autocomplete="off">
-                                                    <option value="*">Semua</option>
-                                                    @foreach ($nodes as $id => $number)
-                                                        <option value="{{ $id }}">{{ $number }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <button type="submut" class="btn btn-primary mt-4">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="table-responsive">
                             <table class="table fs-7">
                                 <thead>
@@ -131,25 +135,31 @@
                                         <tr>
                                             {{-- <td>{{ $row->iot_node_serial_number }}</td> --}}
                                             <td>{{ $row->created_at }}</td>
-                                            <td align="center">{{ number_format($row->temperature_node, 0) }} <small>°C</small></td>
-                                            <td align="center">{{ number_format($row->humidity_node, 0) }} <small>%</small></td>
-                                            <td align="center">{{ number_format($row->dissolver_oxygen, 2) }} <small>mg/L</small></td>
+                                            <td align="center">{{ number_format($row->temperature_node, 0) }}
+                                                <small>°C</small>
+                                            </td>
+                                            <td align="center">{{ number_format($row->humidity_node, 0) }}
+                                                <small>%</small>
+                                            </td>
+                                            <td align="center">{{ number_format($row->dissolver_oxygen, 2) }}
+                                                <small>mg/L</small>
+                                            </td>
                                             <td align="center">
-                                                @if($row->turbidity == 0)
+                                                @if ($row->turbidity == 0)
                                                     NaN
                                                 @else
                                                     {{ number_format($row->turbidity, 2) }} <small>NTU</small>
                                                 @endif
                                             </td>
                                             <td align="center">
-                                                @if($row->salinity == 0)
+                                                @if ($row->salinity == 0)
                                                     NaN
                                                 @else
                                                     {{ number_format($row->salinity, 2) }} <small>PSU</small>
                                                 @endif
                                             </td>
                                             <td align="center">
-                                                @if($row->cod == 0)
+                                                @if ($row->cod == 0)
                                                     NaN
                                                 @else
                                                     {{ number_format($row->cod, 2) }} <small>mg/L</small>
@@ -158,44 +168,49 @@
                                             <td align="center"><small>pH</small> {{ number_format($row->ph, 2) }}</td>
                                             <td align="center">{{ number_format($row->orp, 2) }} <small>mV</small></td>
                                             <td align="center">
-                                                @if($row->tds == 0)
+                                                @if ($row->tds == 0)
                                                     NaN
                                                 @else
                                                     {{ number_format($row->tds, 2) }} <small>ppm</small>
                                                 @endif
                                             </td>
-                                            <td align="center">{{ number_format($row->nitrat, 2) }} <small>mg/L</small></td>
-                                            <td align="center">{{ number_format($row->temperature_air, 0) }} <small>°C</small></td>
+                                            <td align="center">{{ number_format($row->nitrat, 2) }} <small>mg/L</small>
+                                            </td>
+                                            <td align="center">{{ number_format($row->temperature_air, 0) }}
+                                                <small>°C</small>
+                                            </td>
                                             <td align="center">
-                                                @if($row->tds == 0)
+                                                @if ($row->tds == 0)
                                                     NaN
                                                 @else
                                                     {{ number_format($row->tds, 2) }} <small>mg/L</small>
                                                 @endif
                                             </td>
                                             <td align="center">
-                                                @if($row->debit_air == 0)
+                                                @if ($row->debit_air == 0)
                                                     NaN
                                                 @else
                                                     {{ number_format($row->debit_air, 2) }} <small>m3/s</small>
                                                 @endif
                                             </td>
-                                            <td align="center">{{ number_format($row->water_level_cm, 0) }} <small>cm</small></td>
+                                            <td align="center">{{ number_format($row->water_level_cm, 0) }}
+                                                <small>cm</small>
+                                            </td>
                                         </tr>
                                     @empty
-                                        -tidak ada data-, <a href="{{ route('report.rawMonitoring') }}"
-                                            style="color: #1e88e5;">segarkan kembali</a>
+                                        <td colspan="20" class="text-center">-tidak ada data-
+                                        </td>
                                     @endforelse
                                 </tbody>
                             </table>
 
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
+    </div>
     </div>
 @endsection
 
