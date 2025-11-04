@@ -105,32 +105,31 @@
                             <table class="table fs-7">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2">IoT Node</th>
-                                        <th rowspan="2">Waktu</th>
+                                        {{-- <th rowspan="2">IoT Node</th> --}}
+                                        <th rowspan="2">Timestamp</th>
                                         <th colspan="20" class="text-center">Data Telemetry</th>
                                     </tr>
                                     <tr>
+                                        <th width="9.1%" align="center" class="text-center">Pitch</th>
+                                        <th width="9.1%" align="center" class="text-center">Yaw</th>
+                                        <th width="9.1%" align="center" class="text-center">Roll</th>
+                                        <th width="9.1%" align="center" class="text-center">Longitude</th>
+                                        <th width="9.1%" align="center" class="text-center">Latitude</th>
+                                        <th width="9.1%" align="center" class="text-center">Altitude</th>
                                         <th width="9.1%" align="center" class="text-center">Suhu Lingkungan</th>
-                                        <th width="9.1%" align="center" class="text-center">Humidity Lingkungan</th>
-                                        <th width="9.1%" align="center" class="text-center">Dissolved Oxygen</th>
-                                        <th width="9.1%" align="center" class="text-center">Turbidity</th>
-                                        <th width="9.1%" align="center" class="text-center">EC/Salinity</th>
-                                        <th width="9.1%" align="center" class="text-center">COD</th>
-                                        <th width="9.1%" align="center" class="text-center">pH</th>
-                                        <th width="9.1%" align="center" class="text-center">ORP</th>
-                                        <th width="9.1%" align="center" class="text-center">TDS</th>
-                                        <th width="9.1%" align="center" class="text-center">Nitrat</th>
+                                        <th width="9.1%" align="center" class="text-center">Kelembapan Lingkungan</th>
                                         <th width="9.1%" align="center" class="text-center">Suhu Air</th>
-                                        <th width="9.1%" align="center" class="text-center">TSS</th>
-                                        <th width="9.1%" align="center" class="text-center">Debit air</th>
-                                        <th width="9.1%" align="center" class="text-center">Jarak Ke Permukaan Air</th>
-                                        <th width="9.1%" align="center" class="text-center">Status Solenoid</th>
+                                        <th width="9.1%" align="center" class="text-center">Dissolved Oxygen</th>
+                                        <th width="9.1%" align="center" class="text-center">Ph</th>
+                                        <th width="9.1%" align="center" class="text-center">Turbidity</th>
+                                        <th width="9.1%" align="center" class="text-center">Salinity</th>
+                                        <th width="9.1%" align="center" class="text-center">Arus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($data as $row)
                                         <tr>
-                                            <td>{{ $row->iot_node_serial_number }}</td>
+                                            {{-- <td>{{ $row->iot_node_serial_number }}</td> --}}
                                             <td>{{ $row->created_at }}</td>
                                             <td align="center">{{ number_format($row->temperature_node, 0) }} <small>°C</small></td>
                                             <td align="center">{{ number_format($row->humidity_node, 0) }} <small>%</small></td>
@@ -182,7 +181,6 @@
                                                 @endif
                                             </td>
                                             <td align="center">{{ number_format($row->water_level_cm, 0) }} <small>cm</small></td>
-                                            <td align="center">{{ ($row->status_pompa === 1 ? 'Hidup' : 'Mati')}}</td>
                                         </tr>
                                     @empty
                                         -tidak ada data-, <a href="{{ route('report.rawMonitoring') }}"
