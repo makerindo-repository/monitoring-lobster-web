@@ -188,7 +188,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="w-100">
@@ -196,7 +196,7 @@
                                     style="object-fit: contain;">
                             </div>
                         </div>
-                        <div class="col-12">
+                        {{-- <div class="col-12">
                             <div class="card px-2 py-3 border-2 gap-3">
                                 <div>
                                     <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
@@ -224,11 +224,119 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="card px-2 py-3 border-2 gap-2">
+                        <div>
+                            <h6 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                    style="color: #FB9E3A;"></i>Lokasi dan Posisi KJA</h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Longitude</p>
+                                    <p class="fw-bolder fs-7">107.589234&deg;</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Latitude</p>
+                                    <p class="fw-bolder fs-7">-6.872345&deg;</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Altitude</p>
+                                    <p class="fw-bolder fs-7">0m</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Pitch</p>
+                                    <p class="fw-bolder fs-7">5.23&deg;</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Roll</p>
+                                    <p class="fw-bolder fs-7">-2.87&deg;</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Yaw</p>
+                                    <p class="fw-bolder fs-7">180.45&deg;</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h6 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                    style="color: #FB9E3A;"></i>Parameter Lingkungan</h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Temperature</p>
+                                    <p class="fw-bolder fs-7">28.6&deg;C</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Humidity</p>
+                                    <p class="fw-bolder fs-7">75%RH</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Pressure</p>
+                                    <p class="fw-bolder fs-7">1008.3hPa</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h6 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                    style="color: #FB9E3A;"></i>Sensor Kualitas Air</h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Temperature</p>
+                                    <p class="fw-bolder fs-7">28.6&deg;C</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Dissolved Oxygen</p>
+                                    <p class="fw-bolder fs-7">7.8mg/L</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">pH</p>
+                                    <p class="fw-bolder fs-7">7.2pH</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Turbidity</p>
+                                    <p class="fw-bolder fs-7">12.5NTU</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Salinity</p>
+                                    <p class="fw-bolder fs-7">31.8PSU</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Current Speed</p>
+                                    <p class="fw-bolder fs-7">0.45m/s</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h6 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                    style="color: #FB9E3A;"></i>Pemantauan Aktivitas Lobster dengan AI (Berdasarkan
+                                Data Kamera)</h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Sedang Makan</p>
+                                    <p class="fw-bolder fs-7">50%</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Sedang Tidur</p>
+                                    <p class="fw-bolder fs-7">35%</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-0 text-secondary fs-7">Sedang Berantem</p>
+                                    <p class="fw-bolder fs-7">15%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {{-- <div class="row g-3">
                         <div class="col-12">
                             <div class="card px-2 py-3 border-2 gap-3">
                                 <div>
@@ -352,10 +460,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div> --}}
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
