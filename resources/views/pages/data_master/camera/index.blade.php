@@ -1,0 +1,96 @@
+@extends('pages.layouts.app')
+
+
+@section('content')
+    <div class="container">
+        <h4 class="fw-bolder mb-0">Data Kamera</h4>
+        <p class="text-gray fs-7">Total {{ $data->count() }} data kamera yang ada di aplikasi.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card p-4 gap-4">
+                    <div class="w-100 text-end">
+                        <a href="{{ route($route . 'create') }}" class="btn btn-sm fw-bolder text-white"
+                            style="background-color: #FB9E3A;">Tambah
+                            data <i class="fa-solid fa-circle-plus ms-1"></i></a>
+                    </div>
+
+                    {{-- Alert Message --}}
+                    @if (session()->has('success'))
+                        <div class="row">
+                            <div class="col-md-12">
+                                <x-success-message action="{{ session()->get('success') }}" />
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="table-responsive">
+                        <table class="table" style="font-size:.9em;">
+                            <thead>
+                                <tr>
+                                    <th width="1%" scope="col">No</th>
+                                    <th scope="col" class="text-center">ID Kamera</th>
+                                    <th scope="col" class="text-center">KJA</th>
+                                    <th scope="col" class="text-center">IP Kamera</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($data as $row)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $row->id_kamera }}</td>
+                                        <td class="text-center">{{ $row->kja->nomor_kja }}</td>
+                                        <td class="text-center">{{ $row->ip_kamera }}</td>
+                                        <td class="text-center">{{ $row->status ? 'Aktif' : 'Tidak Aktif'}}</td>
+                                        <td class="text-center">
+                                            <a href="{{ route($route . 'edit', $row->id) }}"
+                                                class="fw-bold mr-1 rounded text-white"
+                                                style="background-color: #FB9E3A; padding: 0.35rem;"><i
+                                                    class="fa-solid fa-pen-to-square"></i></a>
+                                            <form id="Hapus{{ $row->id }}"
+                                                action="{{ route($route . 'destroy', $row->id) }}" method="POST"
+                                                class="d-inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button id="Hapus" type="submit"
+                                                    class="bg-danger fw-bold border-0 rounded text-white"
+                                                    style="padding-block: 0.25rem;"
+                                                    onclick="deleteActivity({{ $row->id }})">
+                                                    <i class="fa-solid fa-trash-arrow-up"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">- Tidak ada data ditemukan. -</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            {{ $data->links() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function Notif() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data yang memiliki anak tidak bisa dihapus!'
+            });
+        }
+
+        @if (session()->has('Gagal'))
+            Notif();
+        @endif
+    </script>
+@endsection
