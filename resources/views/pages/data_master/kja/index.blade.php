@@ -72,6 +72,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            {{ $data->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
