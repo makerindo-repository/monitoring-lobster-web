@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/client', 'ClientController');
         Route::resource('/sensor', 'SensorController');
         Route::resource('/kja', 'KjaController');
+        Route::resource('/camera', 'CameraController');
     });
     Route::resource('/user', 'UserController');
     Route::get('/petugas/tambah-role-permissions', 'RolePermissionsController@create')->name('createPermission');
