@@ -43,6 +43,10 @@
                     'slug' => 'Sensor',
                     'route' => route('sensor.index'),
                 ],
+                [
+                    'slug' => 'Keramba Jaring Apung',
+                    'route' => route('kja.index'),
+                ],
             ],
         ],
         [
