@@ -47,6 +47,10 @@
                     'slug' => 'Keramba Jaring Apung',
                     'route' => route('kja.index'),
                 ],
+                [
+                    'slug' => 'Kamera',
+                    'route' => route('camera.index'),
+                ]
             ],
         ],
         [
