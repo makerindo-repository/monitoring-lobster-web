@@ -7,12 +7,12 @@
             'dropdown' => false,
             'route' => url('/dashboard'),
         ],
-        [
-            'slug' => 'Monitoring',
-            'icon' => asset('svg/icon-menu/monitor.svg'),
-            'dropdown' => false,
-            'route' => url('/monitoring'),
-        ],
+        // [
+        //     'slug' => 'Monitoring',
+        //     'icon' => asset('svg/icon-menu/monitor.svg'),
+        //     'dropdown' => false,
+        //     'route' => url('/monitoring'),
+        // ],
         [
             'slug' => 'Data Master',
             'icon' => asset('svg/icon-menu/data-master.svg'),
@@ -36,10 +36,6 @@
                     'route' => route('city.index'),
                 ],
                 [
-                    'slug' => 'Client',
-                    'route' => route('client.index'),
-                ],
-                [
                     'slug' => 'Sensor',
                     'route' => route('sensor.index'),
                 ],
@@ -50,7 +46,11 @@
                 [
                     'slug' => 'Kamera',
                     'route' => route('camera.index'),
-                ]
+                ],
+                [
+                    'slug' => 'Pakan',
+                    'route' => route('feed.index'),
+                ],
             ],
         ],
         [
