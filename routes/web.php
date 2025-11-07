@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group([
         'prefix'    => '/data-master',
         'namespace' => 'DataMaster',
-    ], function() {
+    ], function () {
         Route::resource('/edge-computing', 'EdgeComputingController');
         Route::resource('/iot-node', 'IOTNodeController');
         Route::resource('/region', 'RegionController');
@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/kja', 'KjaController');
         Route::resource('/camera', 'CameraController');
         Route::resource('/feed', 'FeedController');
+        Route::resource('/petugas', 'PetugasController');
     });
     Route::resource('/user', 'UserController');
     Route::get('/petugas/tambah-role-permissions', 'RolePermissionsController@create')->name('createPermission');
@@ -64,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group([
         'prefix' =>  '/report',
         'as'   => 'report.'
-    ], function() {
+    ], function () {
         Route::get('/node-registration', 'ReportController@nodeRegistration')->name('nodeRegistration');
         Route::get('/node-registration-pdf', 'ReportController@nodeRegistrationPDF')->name('nodeRegistration.pdf');
         Route::get('/node-registration-excel', 'ReportController@nodeRegistrationExcel')->name('nodeRegistration.excel');
@@ -80,6 +81,5 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/activity-log', 'ReportController@activityLog')->name('activityLog');
         Route::get('/activity-log-pdf', 'ReportController@activityLogPDF')->name('activityLog.pdf');
         Route::get('/activity-log-excel', 'ReportController@activityLogExcel')->name('activityLog.excel');
-
     });
 });
