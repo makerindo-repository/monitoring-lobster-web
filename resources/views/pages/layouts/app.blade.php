@@ -48,12 +48,12 @@
                     'route' => route('camera.index'),
                 ],
                 [
-                    'slug' => 'Pakan',
-                    'route' => route('feed.index'),
-                ],
-                [
                     'slug' => 'Petugas',
                     'route' => route('petugas.index'),
+                ],
+                [
+                    'slug' => 'Pakan',
+                    'route' => route('feed.index'),
                 ]
             ],
         ],
