@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Camera;
 use Illuminate\Http\Request;
 use App\Models\EdgeComputing;
 use App\Models\IOTNode;
 use App\Models\City;
 use App\Models\Maintenance;
-use App\Models\Client;
+use App\Models\Kja;
 
 class DashboardController extends Controller
 {
@@ -22,13 +23,16 @@ class DashboardController extends Controller
             ->whereNotNull('activated_at')
             ->pluck('serial_number');
 
+        $payload['cameras'] = Camera::where('status', true)->get();
+
         $payload['statistic'] = [
             'edge' => EdgeComputing::count(),
             'node' => IOTNode::count(),
             'node_active' => IOTNode::whereNotNull('activated_at')->count(),
             'city_count' => $cities->count(),
             'region_count' => count(array_unique($cities->pluck('region_id')->toArray())),
-            'client' =>  Client::count(),
+            'kja' =>  Kja::count(),
+            'camera_active' => Camera::where('status', true)->count(),
         ];
 
         $payload['region_node_active']   = IOTNode::with(['edge_computing.city.region'])->whereNotNull('activated_at')->has('monitoring_telemetries')->get();

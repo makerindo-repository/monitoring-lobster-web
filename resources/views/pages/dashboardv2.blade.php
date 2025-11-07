@@ -114,7 +114,7 @@
                                     <small class="text-secondary">Total Keramba Jaring Apung (KJA)</small>
                                     <div class="col-md-6">
                                         <h2 class="fw-bold">
-                                            1
+                                            {{ $statistic['kja'] }}
                                             <small style="font-size:.5em; font-weight:normal;">KJA</small>
                                         </h2>
                                     </div>
@@ -152,7 +152,7 @@
                                     <small class="text-secondary">Total Kamera Aktif</small>
                                     <div class="col-md-6">
                                         <h2 class="fw-bold">
-                                            1
+                                            {{ $statistic['camera_active'] }}
                                             <small style="font-size:.5em; font-weight:normal;">Kamera</small>
                                         </h2>
                                     </div>
@@ -180,9 +180,9 @@
                     @csrf
                     <label for="camera" class="form-label fw-bolder">Pilih Kamera</label>
                     <select name="camera" id="camera" class="form-select w-50">
-                        <option value="1">Kamera 1</option>
-                        <option value="2">Kamera 2</option>
-                        <option value="3">Kamera 3</option>
+                        @foreach ($cameras as $cam)
+                            <option value="{{ $cam->id_kamera }}">{{ $cam->id_kamera }}</option>
+                        @endforeach
                     </select>
                 </form>
             </div>
