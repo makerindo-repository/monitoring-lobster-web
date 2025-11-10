@@ -19,9 +19,9 @@ class DashboardController extends Controller
     public function index () {
         $payload = [];
         $cities = City::with(['edge_computing'])->has('edge_computing')->get();
-        $payload['nodes'] = IOTNode::query()
-            ->whereNotNull('activated_at')
-            ->pluck('serial_number');
+        // $payload['nodes'] = IOTNode::query()
+        //     ->whereNotNull('activated_at')
+        //     ->pluck('serial_number');
 
         $payload['cameras'] = Camera::where('status', true)->get();
 
@@ -35,7 +35,7 @@ class DashboardController extends Controller
             'camera_active' => Camera::where('status', true)->count(),
         ];
 
-        $payload['region_node_active']   = IOTNode::with(['edge_computing.city.region'])->whereNotNull('activated_at')->has('monitoring_telemetries')->get();
+        // $payload['region_node_active']   = IOTNode::with(['edge_computing.city.region'])->whereNotNull('activated_at')->has('monitoring_telemetries')->get();
         $payload['registration_history'] = IOTNode::with(['user', 'city'])->whereNotNull('activated_at')->get();
         $payload['maintenance_history']  = Maintenance::with('iot_node')->latest()->limit(5)->get();
         // dd($payload['maintenance_history']);
