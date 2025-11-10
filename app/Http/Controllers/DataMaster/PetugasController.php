@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Petugas;
+use App\Models\Petugas;
 use Illuminate\Http\Request;
 
 class PetugasController extends Controller
