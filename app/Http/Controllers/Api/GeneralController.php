@@ -844,7 +844,7 @@ public function updateTreshold(Request $request)
 public function getIotNode(Request $request): JsonResponse
     {
         $location = IOTNode::query()->with('edge_computing')
-        ->select('id','lat','lng')
+        // ->select('id','lat','lng')
         ->where('edge_computing_id',$request->edge_computing_id)
         ->get();
 
