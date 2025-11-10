@@ -122,6 +122,7 @@
                                         <th width="9.1%" align="center" class="text-center">Altitude</th>
                                         <th width="9.1%" align="center" class="text-center">Suhu Lingkungan</th>
                                         <th width="9.1%" align="center" class="text-center">Kelembapan Lingkungan</th>
+                                        <th width="9.1%" align="center" class="text-center">Pressure</th>
                                         <th width="9.1%" align="center" class="text-center">Suhu Air</th>
                                         <th width="9.1%" align="center" class="text-center">Dissolved Oxygen</th>
                                         <th width="9.1%" align="center" class="text-center">Ph</th>
@@ -135,67 +136,21 @@
                                         <tr>
                                             {{-- <td>{{ $row->iot_node_serial_number }}</td> --}}
                                             <td>{{ $row->created_at }}</td>
-                                            <td align="center">{{ number_format($row->temperature_node, 0) }}
-                                                <small>°C</small>
-                                            </td>
-                                            <td align="center">{{ number_format($row->humidity_node, 0) }}
-                                                <small>%</small>
-                                            </td>
-                                            <td align="center">{{ number_format($row->dissolver_oxygen, 2) }}
-                                                <small>mg/L</small>
-                                            </td>
-                                            <td align="center">
-                                                @if ($row->turbidity == 0)
-                                                    NaN
-                                                @else
-                                                    {{ number_format($row->turbidity, 2) }} <small>NTU</small>
-                                                @endif
-                                            </td>
-                                            <td align="center">
-                                                @if ($row->salinity == 0)
-                                                    NaN
-                                                @else
-                                                    {{ number_format($row->salinity, 2) }} <small>PSU</small>
-                                                @endif
-                                            </td>
-                                            <td align="center">
-                                                @if ($row->cod == 0)
-                                                    NaN
-                                                @else
-                                                    {{ number_format($row->cod, 2) }} <small>mg/L</small>
-                                                @endif
-                                            </td>
-                                            <td align="center"><small>pH</small> {{ number_format($row->ph, 2) }}</td>
-                                            <td align="center">{{ number_format($row->orp, 2) }} <small>mV</small></td>
-                                            <td align="center">
-                                                @if ($row->tds == 0)
-                                                    NaN
-                                                @else
-                                                    {{ number_format($row->tds, 2) }} <small>ppm</small>
-                                                @endif
-                                            </td>
-                                            <td align="center">{{ number_format($row->nitrat, 2) }} <small>mg/L</small>
-                                            </td>
-                                            <td align="center">{{ number_format($row->temperature_air, 0) }}
-                                                <small>°C</small>
-                                            </td>
-                                            <td align="center">
-                                                @if ($row->tds == 0)
-                                                    NaN
-                                                @else
-                                                    {{ number_format($row->tds, 2) }} <small>mg/L</small>
-                                                @endif
-                                            </td>
-                                            <td align="center">
-                                                @if ($row->debit_air == 0)
-                                                    NaN
-                                                @else
-                                                    {{ number_format($row->debit_air, 2) }} <small>m3/s</small>
-                                                @endif
-                                            </td>
-                                            <td align="center">{{ number_format($row->water_level_cm, 0) }}
-                                                <small>cm</small>
-                                            </td>
+                                            <td align="center">{{ (float) $row->pitch }}</td>
+                                            <td align="center">{{ (float) $row->roll }}</td>
+                                            <td align="center">{{ (float) $row->yaw }}</td>
+                                            <td align="center">{{ (float) $row->longitude }}</td>
+                                            <td align="center">{{ (float) $row->latitude }}</td>
+                                            <td align="center">{{ (float) $row->altitude }}</td>
+                                            <td align="center">{{ $row->suhu }}</td>
+                                            <td align="center">{{ $row->kelembapan }}</td>
+                                            <td align="center">{{ $row->pressure }}</td>
+                                            <td align="center">{{ $row->suhu_air }}</td>
+                                            <td align="center">{{ $row->dissolved_oxygen }}</td>
+                                            <td align="center">{{ $row->ph }}</td>
+                                            <td align="center">{{ $row->turbidity }}</td>
+                                            <td align="center">{{ $row->salinity }}</td>
+                                            <td align="center">{{ $row->arus }}</td>
                                         </tr>
                                     @empty
                                         <td colspan="20" class="text-center">-tidak ada data-
