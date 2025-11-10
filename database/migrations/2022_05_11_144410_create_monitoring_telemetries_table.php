@@ -15,28 +15,24 @@ class CreateMonitoringTelemetriesTable extends Migration
     {
         Schema::create('monitoring_telemetries', function (Blueprint $table) {
             $table->id();
-            $table->string('iot_node_serial_number')->nullable();
-            $table->float('temperature_node')->default(0);
-            $table->float('temperature_edge')->default(0);
-            $table->float('humidity_node')->default(0);
-            $table->float('humidity_edge')->default(0);
-            $table->float('dissolver_oxygen')->default(0);
-            $table->float('turbidity')->default(0);
-            $table->float('salinity')->default(0);
-            $table->float('cod')->default(0);
-            $table->float('ph')->default(0);
-            $table->float('orp')->default(0);
-            $table->float('tds')->default(0);
-            $table->float('nitrat')->default(0);
-            $table->float('temperature_air')->default(0);
-            $table->float('tss')->default(0);
-            $table->float('water_level_cm')->default(0);
-            $table->float('water_level_persen')->default(0);
-            $table->float('debit_air',8,2)->default(0);
-            $table->unsignedTinyInteger('status_pompa')->default(0);
+            $table->string('device_timestamp')->nullable();
+            $table->string('id_perangkat')->nullable();
+            $table->decimal('latitude', 20, 15)->nullable();
+            $table->decimal('longitude', 20, 15)->nullable();
+            $table->decimal('altitude', 20, 15)->nullable();
+            $table->decimal('pitch', 20, 15)->nullable();
+            $table->decimal('roll', 20, 15)->nullable();
+            $table->decimal('yaw', 20, 15)->nullable();
+            $table->float('suhu')->nullable();
+            $table->float('kelembapan')->nullable();
+            $table->float('pressure')->nullable();
+            $table->float('suhu_air')->nullable();
+            $table->float('dissolved_oxygen')->nullable();
+            $table->float('ph')->nullable();
+            $table->float('turbidity')->nullable();
+            $table->float('salinity')->nullable();
+            $table->float('arus')->nullable();
             $table->timestamps();
-
-            $table->foreign('iot_node_serial_number')->references('serial_number')->on('i_o_t_nodes')->onDelete('set null');
         });
     }
 
