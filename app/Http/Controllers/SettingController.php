@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Sensor;
 use App\Models\IOTNode;
 use App\Models\Setting;
-
 use App\Models\Treshold;
+use App\Models\WeatherSetting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\Village;
 
 class SettingController extends Controller
 {
+    public $setting;
+    public $view;
+
     public function __construct(Setting $setting) {
         $this->setting = $setting;
         $this->view = 'pages.setting';
@@ -23,10 +30,12 @@ class SettingController extends Controller
         $nodes = IOTNode::query()
             ->whereNotNull('activated_at')
             ->pluck('serial_number');
+        $provinces = Province::get();
         return view($this->view, [
             'data'      => $this->setting::first(),
             'treshold' => $treshold,
             'nodes' => $nodes,
+            'provinces' => $provinces,
         ]);
     }
 
@@ -102,6 +111,51 @@ class SettingController extends Controller
 
         return back()->with('success', 'destroy');
 
+    }
+
+    public function saveWeather(Request $request) {
+        $request->validate([
+            'province' => 'required',
+            'city' => 'required',
+            'district' => 'required',
+            'village' => 'required',
+        ], [
+            'province.required' => 'Provinsi wajib diisi.',
+            'city.required' => 'Kota/Kabupaten wajib diisi.',
+            'district.required' => 'Kecamatan wajib diisi.',
+            'village.required' => 'Desa wajib diisi.',
+        ]);
+
+        $weather = WeatherSetting::first();
+        if (!$weather) {
+            $weather = new WeatherSetting();
+        }
+
+        $weather->province_code = $request->province;
+        $weather->city_code = $request->city;
+        $weather->district_code = $request->district;
+        $weather->village_code = $request->village;
+        $weather->save();
+
+        return redirect()->route('setting')->with('success', 'store');
+    }
+
+    // Get data kab/kota based on kode provinsi
+    public function getCities(Request $request)
+    {
+        return City::where('province_code', $request->province_code)->get();
+    }
+
+    // Get data kecamatan based on kode kab/kota
+    public function getDistricts(Request $request)
+    {
+        return District::where('city_code', $request->city_code)->get();
+    }
+
+    // Get data desa based on kode kecamatan
+    public function getVillages(Request $request)
+    {
+        return Village::where('district_code', $request->district_code)->get();
     }
 
 }

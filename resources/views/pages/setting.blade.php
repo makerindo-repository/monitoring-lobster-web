@@ -4,8 +4,9 @@
     <link rel="stylesheet" href="{{ asset('css/form.css') }}">
     <style>
         small {
-    font-size: 10px; /* Atur ukuran font yang diinginkan */
-}
+            font-size: 10px;
+            /* Atur ukuran font yang diinginkan */
+        }
     </style>
 @endpush
 
@@ -143,6 +144,62 @@
                         </form>
                     </div>
                 </div>
+
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-0">Pengaturan Data Cuaca</h5>
+                        <p class="text-gray fs-7">Harap isi semua form input lalu klik tombol simpan.</p>
+
+                        {{-- Error Validation --}}
+                        <x-error-validation-message errors="$errors" />
+
+                        {{-- Alert Message --}}
+                        @if (session()->has('success'))
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <x-success-message action="{{ session()->get('success') }}" />
+                                </div>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('weather.store') }}" method="POST">
+                            @csrf
+                            <div class="form-group mb-2">
+                                <label for="province">Provinsi</label>
+                                <select name="province" id="province" class="form-control" required>
+                                    <option value="">Pilih Provinsi</option>
+                                    @foreach ($provinces as $row)
+                                        <option value="{{ $row->code }}">{{ $row->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="city">Kabupaten/Kota</label>
+                                <select name="city" id="city" class="form-control" required></select>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="district">Kecamatan</label>
+                                <select name="district" id="district" class="form-control" required></select>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="village">Desa</label>
+                                <select name="village" id="village" class="form-control" required></select>
+                            </div>
+
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary">Simpan </button>
+                            </div>
+                            <hr>
+                            <div class="p-2 border-flat alert-info fw-bold" style="font-size:.8em; opacity:.9;">
+                                <div>* Isi semua input dengan benar</div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -154,7 +211,8 @@
                 var selectedSerialNumber = $(this).val();
 
                 if (selectedSerialNumber) {
-                    var apiUrl = `${_base_url}/api/treshold/web?iot_node_serial_number=` + selectedSerialNumber;
+                    var apiUrl = `${_base_url}/api/treshold/web?iot_node_serial_number=` +
+                        selectedSerialNumber;
 
                     $.ajax({
                         type: "GET",
@@ -237,6 +295,48 @@
                         }
                     });
                 }
+            });
+
+            $('#province').on('change', function() {
+                let province_code = $(this).val();
+                $.post('/weather/cities', {
+                    province_code,
+                    _token: '{{ csrf_token() }}'
+                }, function(data) {
+                    $('#city').html('<option value="">-- Pilih Kota/Kabupaten --</option>');
+                    data.forEach(city => {
+                        $('#city').append(
+                            `<option value="${city.code}">${city.name}</option>`);
+                    });
+                });
+            });
+
+            $('#city').on('change', function() {
+                let city_code = $(this).val();
+                $.post('/weather/districts', {
+                    city_code,
+                    _token: '{{ csrf_token() }}'
+                }, function(data) {
+                    $('#district').html('<option value="">-- Pilih Kecamatan --</option>');
+                    data.forEach(d => {
+                        $('#district').append(
+                            `<option value="${d.code}">${d.name}</option>`);
+                    });
+                });
+            });
+
+            $('#district').on('change', function() {
+                let district_code = $(this).val();
+                $.post('/weather/villages', {
+                    district_code,
+                    _token: '{{ csrf_token() }}'
+                }, function(data) {
+                    $('#village').html('<option value="">-- Pilih Desa --</option>');
+                    data.forEach(v => {
+                        $('#village').append(
+                            `<option value="${v.code}">${v.name}</option>`);
+                    });
+                });
             });
         });
     </script>
