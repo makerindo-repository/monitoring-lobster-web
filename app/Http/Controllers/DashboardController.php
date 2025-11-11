@@ -9,6 +9,7 @@ use App\Models\IOTNode;
 use App\Models\City;
 use App\Models\Maintenance;
 use App\Models\Kja;
+use App\Models\LogPakan;
 use App\Models\WeatherSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -105,9 +106,10 @@ class DashboardController extends Controller
                 }
             }
         }
-        
-        // dd($weather);
+
         $payload['weather'] = $weather;
+
+        $payload['logPakan'] = LogPakan::latest()->paginate(10);
 
         return view($this->view, $payload);
     }

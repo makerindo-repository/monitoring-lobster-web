@@ -482,6 +482,39 @@
                     </div> --}}
             </div>
         </div>
+
+        <div class="card p-3 mt-4 gap-4">
+            <h4 class="fw-bold">Log Pemberian Pakan</h4>
+            <div class="table-responsive">
+                <table class="table" style="font-size:.9em;">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Timestamp</th>
+                            <th scope="col" class="text-center">Jenis Pakan</th>
+                            <th scope="col" class="text-center">Berat (Kg)</th>
+                            <th scope="col" class="text-center">Petugas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($logPakan as $row)
+                            <tr>
+                                <td class="text-center">{{ $row->created_at }}</td>
+                                <td class="text-center">{{ $row->jenis_pakan }}</td>
+                                <td class="text-center">{{ $row->berat }}</td>
+                                <td class="text-center">{{ $row->petugas->nama }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">- Tidak ada data ditemukan. -</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    {{ $logPakan->links() }}
+                </div>
+            </div>
+        </div>
     </div>
     </div>
 @endsection
