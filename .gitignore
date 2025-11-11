@@ -10,3 +10,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/public/images/edge_computing
+/public/images/iot_node
+/public/images/user
