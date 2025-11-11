@@ -168,6 +168,54 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-4">
+                <div class="card p-3 gap-4 mt-4">
+                    <h6 class="fw-semibold text-secondary mb-1">Cuaca Terkini</h6>
+                    <h6 class="text-muted small mb-2">
+                        <i class="fa-solid fa-location-dot text-primary me-1"></i>
+                        {{ $weather['desa'] . ', ' . $weather['kotkab'] . ', ' . $weather['provinsi'] }}
+                    </h6>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="h2 fw-bold mb-0 text-dark">
+                                {{ $weather['temp'] ?? '--' }}°C
+                            </p>
+                            <p class="small text-muted mb-0">Suhu</p>
+                        </div>
+                        <div>
+                            @if (!empty($weather['icon_url']))
+                                <img src="{{ $weather['icon_url'] }}" alt="Cuaca" class="img-fluid"
+                                    style="width: 48px; height: 48px;">
+                            @else
+                                <i class="fas fa-question-circle text-secondary fs-2"></i>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="row text-center mt-3 small text-muted">
+                        <div class="col d-flex flex-column align-items-center">
+                            <i class="fas fa-wind text-secondary mb-1"></i>
+                            <span>{{ $weather['wind'] ?? '--' }} km/h</span>
+                        </div>
+                        <div class="col d-flex flex-column align-items-center">
+                            <i class="fas fa-tint text-primary mb-1"></i>
+                            <span>{{ $weather['humidity'] ?? '--' }} %</span>
+                        </div>
+                        <div class="col d-flex flex-column align-items-center">
+                            <i class="fas fa-cloud-rain text-info mb-1"></i>
+                            <span>{{ $weather['rain'] ?? '--' }} mm</span>
+                        </div>
+                    </div>
+
+                    <p class="text-center small text-muted mt-2 mb-0">
+                        {{ $weather['desc'] ?? '' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div class="card p-3 gap-4 mt-4">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold">Kamera Real-Time</h4>
@@ -196,35 +244,6 @@
                                     style="object-fit: contain;">
                             </div>
                         </div>
-                        {{-- <div class="col-12">
-                            <div class="card px-2 py-3 border-2 gap-3">
-                                <div>
-                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
-                                            style="color: #FB9E3A;"></i>Pemantauan Aktivitas Lobster dengan AI (Berdasarkan
-                                        Data Kamera)</h5>
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Sedang Makan</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">50%</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Sedang Tidur</p>
-                                            <p class="mt-1 fw-bolder fs-5 text-success">35%</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Sedang Berantem</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">15%</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-md-3">
