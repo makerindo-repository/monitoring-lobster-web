@@ -58,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/setting/tambah-data', 'SettingController@createTreshold')->name('create');
     Route::post('/setting', 'SettingController@store')->name('tresholds.store');
     Route::delete('/setting/{id}', 'SettingController@deleteTreshold')->name('tresholds.destroy');
+    Route::post('/weather/cities', 'SettingController@getCities');
+    Route::post('/weather/districts', 'SettingController@getDistricts');
+    Route::post('/weather/villages', 'SettingController@getVillages');
+    Route::post('/weather', 'SettingController@saveWeather')->name('weather.store');
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::patch('/profile', 'ProfileController@update')->name('profile.update');
