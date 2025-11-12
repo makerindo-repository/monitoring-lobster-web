@@ -7,7 +7,7 @@
             <div class="card mt-5">
                 <div class="card-body pb-4 pt-3">
                     <center>
-                        <img src="{{ asset('images/KKP.png') }}" alt="Logo" width="110px" style="margin-right: 20px;">
+                        <img src="{{ asset('images/logo-diktisaintek.jpg') }}" alt="Logo" width="110px" style="margin-right: 20px;">
                         <img src="{{ asset('images/unpad-logo.png') }}" alt="Logo" width="90px">
                     </center>
                     <h5 class="text-center fw-bolder mt-3 mb-4" style="display: block; word-wrap: break-word;">
