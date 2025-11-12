@@ -169,48 +169,48 @@
         </div>
 
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="card p-3 gap-4 mt-4">
                     <h6 class="fw-semibold text-secondary mb-1">Cuaca Terkini</h6>
                     <h6 class="text-muted small mb-2">
                         <i class="fa-solid fa-location-dot text-primary me-1"></i>
-                        {{ $weather['desa'] . ', ' . $weather['kotkab'] . ', ' . $weather['provinsi'] }}
+                        Pangandaran, Pangandaran, Jawa Barat.
                     </h6>
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <p class="h2 fw-bold mb-0 text-dark">
-                                {{ $weather['temp'] ?? '--' }}°C
+                                24°C
                             </p>
                             <p class="small text-muted mb-0">Suhu</p>
                         </div>
                         <div>
-                            @if (!empty($weather['icon_url']))
+                            {{-- @if (!empty($weather['icon_url']))
                                 <img src="{{ $weather['icon_url'] }}" alt="Cuaca" class="img-fluid"
                                     style="width: 48px; height: 48px;">
-                            @else
+                            @else --}}
                                 <i class="fas fa-question-circle text-secondary fs-2"></i>
-                            @endif
+                            {{-- @endif --}}
                         </div>
                     </div>
 
                     <div class="row text-center mt-3 small text-muted">
                         <div class="col d-flex flex-column align-items-center">
                             <i class="fas fa-wind text-secondary mb-1"></i>
-                            <span>{{ $weather['wind'] ?? '--' }} km/h</span>
+                            15 km/h</span>
                         </div>
                         <div class="col d-flex flex-column align-items-center">
                             <i class="fas fa-tint text-primary mb-1"></i>
-                            <span>{{ $weather['humidity'] ?? '--' }} %</span>
+                            <span>90 %</span>
                         </div>
                         <div class="col d-flex flex-column align-items-center">
                             <i class="fas fa-cloud-rain text-info mb-1"></i>
-                            <span>{{ $weather['rain'] ?? '--' }} mm</span>
+                            <span>4.5 mm</span>
                         </div>
                     </div>
 
                     <p class="text-center small text-muted mt-2 mb-0">
-                        {{ $weather['desc'] ?? '' }}
+                        Hujan Ringan
                     </p>
                 </div>
             </div>
