@@ -29,9 +29,10 @@
         <h4 class="fw-bold mb-4">Dashboard</h4>
 
         <div class="row">
-            <div class="col-md-12">
+            {{-- Summary Data --}}
+            <div class="col-md-9">
                 <div class="row g-4">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row g-2">
@@ -50,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row g-2">
@@ -69,45 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row g-2">
-                                    <small class="text-secondary">Total Provinsi Terdata</small>
-                                    <div class="col-md-6">
-                                        <h2 class="fw-bold">
-                                            {{ $statistic['region_count'] }}
-                                            <small style="font-size:.5em; font-weight:normal;">Prov</small>
-                                        </h2>
-                                    </div>
-                                    <div class="col-md-6 text-end">
-                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-map my-auto"
-                                            style="color: #00d034; background-color: rgb(0, 208, 52, 0.3);"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row g-2">
-                                    <small class="text-secondary">Total Kota Terdata</small>
-                                    <div class="col-md-6">
-                                        <h2 class="fw-bold">
-                                            {{ $statistic['city_count'] }}
-                                            <small style="font-size:.5em; font-weight:normal;">Kota</small>
-                                        </h2>
-                                    </div>
-                                    <div class="col-md-6 text-end">
-                                        <i class="rounded-circle p-3 fs-5 fa-solid fa-city my-auto"
-                                            style="color: #d00000; background-color: rgb(208, 0, 0, 0.3)"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row g-2">
@@ -126,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row g-2">
@@ -145,7 +108,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row g-2">
@@ -166,11 +129,10 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card p-3 gap-4 mt-4">
+            {{-- Cuaca Terkini dari BMKG --}}
+            <div class="col-md-3">
+                <div class="card p-3 gap-4">
                     <h6 class="fw-semibold text-secondary mb-1">Cuaca Terkini</h6>
                     <h6 class="text-muted small mb-2">
                         <i class="fa-solid fa-location-dot text-primary me-1"></i>
@@ -189,7 +151,7 @@
                                 <img src="{{ $weather['icon_url'] }}" alt="Cuaca" class="img-fluid"
                                     style="width: 48px; height: 48px;">
                             @else --}}
-                                <i class="fas fa-question-circle text-secondary fs-2"></i>
+                            <i class="fas fa-question-circle text-secondary fs-2"></i>
                             {{-- @endif --}}
                         </div>
                     </div>
@@ -242,6 +204,35 @@
                             <div class="w-100">
                                 <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture" class="w-100"
                                     style="object-fit: contain;">
+                            </div>
+                        </div>
+                         <div class="col-12">
+                            <div class="card px-2 py-3 border-2 gap-3">
+                                <div>
+                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
+                                            style="color: #FB9E3A;"></i>Pemantauan Aktivitas Lobster dengan AI (Berdasarkan
+                                        Data Kamera)</h5>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Sedang Makan</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">50%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Sedang Tidur</p>
+                                            <p class="mt-1 fw-bolder fs-5 text-success">35%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Sedang Berantem</p>
+                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">15%</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -328,27 +319,6 @@
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Current Speed</p>
                                     <p class="fw-bolder fs-7">0.45m/s</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h6 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
-                                    style="color: #FB9E3A;"></i>Pemantauan Aktivitas Lobster dengan AI (Berdasarkan
-                                Data Kamera)</h6>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="m-0 text-secondary fs-7">Sedang Makan</p>
-                                    <p class="fw-bolder fs-7">50%</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="m-0 text-secondary fs-7">Sedang Tidur</p>
-                                    <p class="fw-bolder fs-7">35%</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="m-0 text-secondary fs-7">Sedang Berantem</p>
-                                    <p class="fw-bolder fs-7">15%</p>
                                 </div>
                             </div>
                         </div>
