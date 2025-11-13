@@ -181,7 +181,7 @@
         <div class="card p-3 gap-4 mt-4">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold">Kamera Real-Time</h4>
-                <span class="fw-bolder text-secondary">Terakhir diupdate: 22-11-2025 10:00</span>
+                <span class="fw-bolder text-secondary">Terakhir diupdate: {{ $latest_telemetry->created_at->format('d-m-Y H:i:s') }}</span>
             </div>
 
             {{-- Dropdown select camera --}}
@@ -246,27 +246,27 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Longitude</p>
-                                    <p class="fw-bolder fs-7">107.589234&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->longitude }}&deg;</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Latitude</p>
-                                    <p class="fw-bolder fs-7">-6.872345&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->latitude }}&deg;</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Altitude</p>
-                                    <p class="fw-bolder fs-7">0m</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->altitude }}m</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Pitch</p>
-                                    <p class="fw-bolder fs-7">5.23&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->pitch }}&deg;</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Roll</p>
-                                    <p class="fw-bolder fs-7">-2.87&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->roll }}&deg;</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Yaw</p>
-                                    <p class="fw-bolder fs-7">180.45&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->yaw }}&deg;</p>
                                 </div>
                             </div>
                         </div>
@@ -278,15 +278,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Temperature</p>
-                                    <p class="fw-bolder fs-7">28.6&deg;C</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->suhu }}&deg;C</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Humidity</p>
-                                    <p class="fw-bolder fs-7">75%RH</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->kelembapan }}%RH</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Pressure</p>
-                                    <p class="fw-bolder fs-7">1008.3hPa</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->pressure }}hPa</p>
                                 </div>
                             </div>
                         </div>
@@ -298,27 +298,27 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Temperature</p>
-                                    <p class="fw-bolder fs-7">28.6&deg;C</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->suhu_air }}&deg;C</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Dissolved Oxygen</p>
-                                    <p class="fw-bolder fs-7">7.8mg/L</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->dissolved_oxygen }}mg/L</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">pH</p>
-                                    <p class="fw-bolder fs-7">7.2pH</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->ph }}pH</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Turbidity</p>
-                                    <p class="fw-bolder fs-7">12.5NTU</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->turbidity }}NTU</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Salinity</p>
-                                    <p class="fw-bolder fs-7">31.8PSU</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->salinity }}PSU</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Current Speed</p>
-                                    <p class="fw-bolder fs-7">0.45m/s</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->arus }}m/s</p>
                                 </div>
                             </div>
                         </div>

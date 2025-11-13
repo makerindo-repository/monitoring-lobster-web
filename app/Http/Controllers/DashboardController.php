@@ -6,10 +6,10 @@ use App\Models\Camera;
 use Illuminate\Http\Request;
 use App\Models\EdgeComputing;
 use App\Models\IOTNode;
-use App\Models\City;
 use App\Models\Maintenance;
 use App\Models\Kja;
 use App\Models\LogPakan;
+use App\Models\MonitoringTelemetry;
 use App\Models\WeatherSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -26,26 +26,21 @@ class DashboardController extends Controller
     public function index()
     {
         $payload = [];
-        $cities = City::with(['edge_computing'])->has('edge_computing')->get();
-        // $payload['nodes'] = IOTNode::query()
-        //     ->whereNotNull('activated_at')
-        //     ->pluck('serial_number');
 
+        $latestTelemetry = MonitoringTelemetry::latest()->first();
+
+        $payload['latest_telemetry'] = $latestTelemetry;
         $payload['cameras'] = Camera::where('status', true)->get();
-
         $payload['statistic'] = [
             'edge' => EdgeComputing::count(),
             'node' => IOTNode::count(),
             'node_active' => IOTNode::whereNotNull('activated_at')->count(),
-            'city_count' => $cities->count(),
-            'region_count' => count(array_unique($cities->pluck('region_id')->toArray())),
             'kja' =>  Kja::count(),
             'camera_active' => Camera::where('status', true)->count(),
         ];
-
-        // $payload['region_node_active']   = IOTNode::with(['edge_computing.city.region'])->whereNotNull('activated_at')->has('monitoring_telemetries')->get();
         $payload['registration_history'] = IOTNode::with(['user', 'city'])->whereNotNull('activated_at')->get();
         $payload['maintenance_history']  = Maintenance::with('iot_node')->latest()->limit(5)->get();
+        // $payload['region_node_active']   = IOTNode::with(['edge_computing.city.region'])->whereNotNull('activated_at')->has('monitoring_telemetries')->get();
         // dd($payload['maintenance_history']);
 
         // // Data Cuaca
@@ -108,7 +103,6 @@ class DashboardController extends Controller
         // }
 
         // $payload['weather'] = $weather;
-
         $payload['logPakan'] = LogPakan::latest()->paginate(10);
 
         return view($this->view, $payload);
