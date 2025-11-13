@@ -136,43 +136,43 @@
                     <h6 class="fw-semibold text-secondary mb-1">Cuaca Terkini</h6>
                     <h6 class="text-muted small mb-2">
                         <i class="fa-solid fa-location-dot text-primary me-1"></i>
-                        Pangandaran, Pangandaran, Jawa Barat.
+                        {{ $weather->desa . ', ' . $weather->kabupaten_kota . ', ' . $weather->provinsi }}
                     </h6>
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <p class="h2 fw-bold mb-0 text-dark">
-                                24°C
+                                {{ $weather->temperature }}°C
                             </p>
                             <p class="small text-muted mb-0">Suhu</p>
                         </div>
                         <div>
-                            {{-- @if (!empty($weather['icon_url']))
-                                <img src="{{ $weather['icon_url'] }}" alt="Cuaca" class="img-fluid"
+                            @if ($weather->image != null)
+                                <img src="{{ $weather->image }}" alt="Cuaca" class="img-fluid"
                                     style="width: 48px; height: 48px;">
-                            @else --}}
-                            <i class="fas fa-question-circle text-secondary fs-2"></i>
-                            {{-- @endif --}}
+                            @else
+                                <i class="fas fa-question-circle text-secondary fs-2"></i>
+                            @endif
                         </div>
                     </div>
 
                     <div class="row text-center mt-3 small text-muted">
                         <div class="col d-flex flex-column align-items-center">
                             <i class="fas fa-wind text-secondary mb-1"></i>
-                            15 km/h</span>
+                            {{ $weather->wind_speed }} km/h</span>
                         </div>
                         <div class="col d-flex flex-column align-items-center">
                             <i class="fas fa-tint text-primary mb-1"></i>
-                            <span>90 %</span>
+                            <span>{{ $weather->humidity }} %</span>
                         </div>
                         <div class="col d-flex flex-column align-items-center">
                             <i class="fas fa-cloud-rain text-info mb-1"></i>
-                            <span>4.5 mm</span>
+                            <span>{{ $weather->rainfall }} mm</span>
                         </div>
                     </div>
 
                     <p class="text-center small text-muted mt-2 mb-0">
-                        Hujan Ringan
+                        {{ $weather->description }}
                     </p>
                 </div>
             </div>
@@ -181,7 +181,8 @@
         <div class="card p-3 gap-4 mt-4">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold">Kamera Real-Time</h4>
-                <span class="fw-bolder text-secondary">Terakhir diupdate: {{ $latest_telemetry->created_at->format('d-m-Y H:i:s') }}</span>
+                <span class="fw-bolder text-secondary">Terakhir diupdate:
+                    {{ $latest_telemetry->created_at->format('d-m-Y H:i:s') }}</span>
             </div>
 
             {{-- Dropdown select camera --}}
@@ -206,7 +207,7 @@
                                     style="object-fit: contain;">
                             </div>
                         </div>
-                         <div class="col-12">
+                        <div class="col-12">
                             <div class="card px-2 py-3 border-2 gap-3">
                                 <div>
                                     <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
