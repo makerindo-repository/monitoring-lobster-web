@@ -50,14 +50,13 @@ class CameraController extends Controller
         $request->validate([
             'id_kamera' => 'required|unique:cameras,id_kamera',
             'kja_id' => 'required|exists:kja,id',
-            'ip_kamera' => 'required|unique:cameras,ip_kamera',
+            'ip_kamera' => 'nullable|unique:cameras,ip_kamera',
             'status' => 'required|boolean',
         ], [
             'id_kamera.required' => 'ID Kamera wajib diisi',
             'id_kamera.unique' => 'ID Kamera sudah ada',
             'kja_id.required' => 'KJA wajib diisi',
             'kja_id.exists' => 'KJA tidak ditemukan',
-            'ip_kamera.required' => 'IP Kamera wajib diisi',
             'ip_kamera.unique' => 'IP Kamera sudah ada',
             'status.required' => 'Status wajib diisi',
             'status.boolean' => 'Status harus berupa boolean',
@@ -110,14 +109,13 @@ class CameraController extends Controller
         $request->validate([
             'id_kamera' => 'required|unique:cameras,id_kamera,' . $id,
             'kja_id' => 'required|exists:kja,id',
-            'ip_kamera' => 'required|unique:cameras,ip_kamera,' . $id,
+            'ip_kamera' => 'nullable|unique:cameras,ip_kamera,' . $id,
             'status' => 'required|boolean',
         ], [
             'id_kamera.required' => 'ID Kamera wajib diisi',
             'id_kamera.unique' => 'ID Kamera sudah ada',
             'kja_id.required' => 'KJA wajib diisi',
             'kja_id.exists' => 'KJA tidak ditemukan',
-            'ip_kamera.required' => 'IP Kamera wajib diisi',
             'ip_kamera.unique' => 'IP Kamera sudah ada',
             'status.required' => 'Status wajib diisi',
             'status.boolean' => 'Status harus berupa boolean',
