@@ -41,9 +41,9 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label for="ip_kamera">IP Kamera</label>
+                                <label for="ip_kamera">IP Kamera (Opsional)</label>
                                 <input type="text" name="ip_kamera" id="ip_kamera" class="form-control"
-                                    value="{{ $data->ip_kamera }}" placeholder="Masukan IP Kamera" required>
+                                    value="{{ $data->ip_kamera }}" placeholder="Masukan IP Kamera">
                             </div>
                             <div class="form-group mb-2">
                                 <label for="status">Status</label>
