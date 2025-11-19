@@ -189,13 +189,16 @@
             <div>
                 <form action="" method="get">
                     <label for="camera" class="form-label fw-bolder">Pilih Kamera</label>
-                    <select name="camera" id="camera" class="form-select w-50">
-                        @foreach ($cameras as $cam)
-                            <option value="{{ $cam->id_kamera }}" {{ request('camera') == $cam->id_kamera ? 'selected' : '' }}>{{ $cam->id_kamera }}</option>
-                        @endforeach
-                    </select>
-
-                    <button class="btn" type="submit">Muat Data</button>
+                    <div class="input-group w-50">
+                        <select class="form-select rounded" name="camera" id="camera" aria-label="Select Camera">
+                            @foreach ($cameras as $cam)
+                                <option value="{{ $cam->id_kamera }}"
+                                    {{ request('camera') == $cam->id_kamera ? 'selected' : '' }}>{{ $cam->id_kamera }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button class="btn text-white ms-2 rounded" type="submit" style="background-color: #FB9E3A;">Muat Data</button>
+                    </div>
                 </form>
             </div>
 
