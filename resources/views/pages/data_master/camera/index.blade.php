@@ -42,7 +42,7 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td class="text-center">{{ $row->id_kamera }}</td>
                                         <td class="text-center">{{ $row->kja->nomor_kja }}</td>
-                                        <td class="text-center">{{ $row->ip_kamera }}</td>
+                                        <td class="text-center">{{ $row->ip_kamera ?? '-' }}</td>
                                         <td class="text-center">{{ $row->status ? 'Aktif' : 'Tidak Aktif'}}</td>
                                         <td class="text-center">
                                             <a href="{{ route($route . 'edit', $row->id) }}"
