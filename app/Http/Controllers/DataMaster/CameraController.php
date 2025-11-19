@@ -65,7 +65,7 @@ class CameraController extends Controller
         Camera::create([
             'id_kamera' => $request->id_kamera,
             'kja_id' => $request->kja_id,
-            'ip_kamera' => $request->ip_kamera,
+            'ip_kamera' => $request->ip_kamera ?? null,
             'status' => $request->status,
         ]);
 
@@ -125,7 +125,7 @@ class CameraController extends Controller
         $camera->update([
             'id_kamera' => $request->id_kamera,
             'kja_id' => $request->kja_id,
-            'ip_kamera' => $request->ip_kamera,
+            'ip_kamera' => $request->ip_kamera ?? null,
             'status' => $request->status,
         ]);
 
