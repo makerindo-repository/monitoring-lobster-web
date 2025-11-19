@@ -187,14 +187,15 @@
 
             {{-- Dropdown select camera --}}
             <div>
-                <form action="" method="post">
-                    @csrf
+                <form action="" method="get">
                     <label for="camera" class="form-label fw-bolder">Pilih Kamera</label>
                     <select name="camera" id="camera" class="form-select w-50">
                         @foreach ($cameras as $cam)
-                            <option value="{{ $cam->id_kamera }}">{{ $cam->id_kamera }}</option>
+                            <option value="{{ $cam->id_kamera }}" {{ request('camera') == $cam->id_kamera ? 'selected' : '' }}>{{ $cam->id_kamera }}</option>
                         @endforeach
                     </select>
+
+                    <button class="btn" type="submit">Muat Data</button>
                 </form>
             </div>
 
@@ -203,8 +204,14 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="w-100">
-                                <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture" class="w-100"
-                                    style="object-fit: contain;">
+                                @if (!$video->ip_kamera)
+                                    <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture"
+                                        class="w-100" style="object-fit: contain;">
+                                @else
+                                    <video class="w-100" style="object-fit: contain;" controls muted autoplay>
+                                        <source src="{{ $video->ip_kamera }}" type="video/mp4" />
+                                    </video>
+                                @endif
                             </div>
                         </div>
                         <div class="col-12">

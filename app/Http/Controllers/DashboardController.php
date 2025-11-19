@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $this->view = 'pages.dashboardv2';
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $payload = [];
 
@@ -44,8 +44,16 @@ class DashboardController extends Controller
         $payload['weather'] = $weather;
         // $payload['region_node_active']   = IOTNode::with(['edge_computing.city.region'])->whereNotNull('activated_at')->has('monitoring_telemetries')->get();
         // dd($payload['maintenance_history']);
+        $video = Camera::query();
 
-      
+        if ($request->filled('camera')) {
+            $video->where('id_kamera', $request->camera);
+        } else {
+            // default kamera
+            $video->where('id_kamera', 'CAM001');
+        }
+
+        $payload['video'] = $video->first();
 
         $payload['logPakan'] = LogPakan::latest()->paginate(10);
 
