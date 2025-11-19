@@ -15,9 +15,9 @@ class CreateCamerasTable extends Migration
     {
         Schema::create('cameras', function (Blueprint $table) {
             $table->id();
-            $table->string('id_kamera');
+            $table->string('id_kamera')->unique();
             $table->foreignId('kja_id')->constrained('kja', 'id')->onDelete('cascade');
-            $table->string('ip_kamera');
+            $table->string('ip_kamera')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();
         });
