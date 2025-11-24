@@ -197,7 +197,8 @@
                                 </option>
                             @endforeach
                         </select>
-                        <button class="btn text-white ms-2 rounded" type="submit" style="background-color: #FB9E3A;">Muat Data</button>
+                        <button class="btn text-white ms-2 rounded" type="submit" style="background-color: #FB9E3A;">Muat
+                            Data</button>
                     </div>
                 </form>
             </div>
@@ -207,13 +208,21 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="w-100">
+                                @php
+                                    $encodedUrl = base64_encode($video->ip_kamera);
+                                @endphp
                                 @if (!$video->ip_kamera)
                                     <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture"
                                         class="w-100" style="object-fit: contain;">
                                 @else
-                                    <video class="w-100" style="object-fit: contain;" controls muted autoplay>
-                                        <source src="{{ $video->ip_kamera }}" type="video/mp4" />
+                                    <video id="cameraVideo" class="w-100" style="object-fit: contain;" controls muted
+                                        autoplay crossorigin="anonymous">
+                                        <source src="{{ url('api/stream/' . $encodedUrl) }}" type="video/mp4" />
                                     </video>
+
+                                    <canvas id="overlayCanvas"
+                                        style="position:absolute; top:0; left:0; pointer-events:none;">
+                                    </canvas>
                                 @endif
                             </div>
                         </div>
@@ -225,22 +234,28 @@
                                         Data Kamera)</h5>
                                 </div>
                                 <div class="row g-3">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Sedang Makan</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">50%</p>
+                                            <p class="m-0">Aktif</p>
+                                            <p id="ai-aktif" class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">0%</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Sedang Tidur</p>
-                                            <p class="mt-1 fw-bolder fs-5 text-success">35%</p>
+                                            <p class="m-0">Pasif</p>
+                                            <p id="ai-pasif" class="mt-1 fw-bolder fs-5 text-success">0%</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Sedang Berantem</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">15%</p>
+                                            <p class="m-0">Agresif</p>
+                                            <p id="ai-agresif" class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="card p-2" style="background-color: #f1f1f1;">
+                                            <p class="m-0">Makan</p>
+                                            <p id="ai-makan" class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0%</p>
                                         </div>
                                     </div>
                                 </div>
@@ -334,133 +349,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-                {{-- <div class="row g-3">
-                        <div class="col-12">
-                            <div class="card px-2 py-3 border-2 gap-3">
-                                <div>
-                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
-                                            style="color: #FB9E3A;"></i>Lokasi dan Posisi KJA</h5>
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Longitude</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">107.589234&deg;</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Latitude</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">-6.872345&deg;</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Altitude</p>
-                                            <p class="mt-1 text-success fw-bolder fs-5">0m</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Pitch</p>
-                                            <p class="mt-1 text-success fw-bolder fs-5">5.23&deg;</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Roll</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb;">-2.87&deg;</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Yaw</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb;">180.45&deg;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="card px-2 py-3 border-2 gap-3">
-                                <div>
-                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
-                                            style="color: #FB9E3A;"></i>Parameter Lingkungan</h5>
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Temperature</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">28.6&deg;C</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Humidity</p>
-                                            <p class="mt-1 fw-bolder fs-5 text-success">75%RH</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Pressure</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">1008.3hPa</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="card px-2 py-3 border-2 gap-3">
-                                <div>
-                                    <h5 class="fw-bolder"><i class="fa-solid fa-location-crosshairs me-2"
-                                            style="color: #FB9E3A;"></i>Sensor
-                                        Kualitas Air</h5>
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Temperature</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">26.4&deg;C</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Dissolved Oxygen</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">7.8mg/L</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">pH</p>
-                                            <p class="mt-1 fw-bolder fs-5 text-success">7.2pH</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Turbidity</p>
-                                            <p class="mt-1 fw-bolder fs-5 text-success">12.5NTU</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Salinity</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">31.8PSU</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="card p-2" style="background-color: #f1f1f1;">
-                                            <p class="m-0">Current Speed</p>
-                                            <p class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0.45m/s</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
             </div>
         </div>
 
@@ -520,7 +409,7 @@
 @endpush
 
 @push('script')
-    <script>
+    {{-- <script>
         const sensors = [
             'dissolver-oxygen',
             'turbidity',
@@ -727,5 +616,146 @@
         function stopInterval() {
             clearInterval(intervalId);
         }
+    </script> --}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.getElementById("cameraVideo");
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            function captureFrame() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    const base64Image = canvas.toDataURL("image/png");
+
+                    sendToBackend(base64Image);
+                }
+            }
+
+            function sendToBackend(image) {
+                fetch("{{ url('/api/detect') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            image: image
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("RAW: ", data);
+                        updateUI(data);
+                        drawBoundingBoxes(data.raw_predictions || []);
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            // Mapping hasil AI ke card
+            function updateUI(data) {
+                const total = data.total;
+
+                const aktif = data.classes.aktif ? (data.classes.aktif / total * 100) : 0;
+                const pasif = data.classes.pasif ? (data.classes.pasif / total * 100) : 0;
+                const agresif = data.classes.agresif ? (data.classes.agresif / total * 100) : 0;
+                const makan = data.classes.makan ? (data.classes.makan / total * 100) : 0;
+
+                document.getElementById("ai-aktif").textContent = aktif.toFixed(1) + "%";
+                document.getElementById("ai-pasif").textContent = pasif.toFixed(1) + "%";
+                document.getElementById("ai-agresif").textContent = agresif.toFixed(1) + "%";
+                document.getElementById("ai-makan").textContent = makan.toFixed(1) + "%";
+            }
+
+            // Bounding Box untuk Frame
+            function drawBoundingBoxes(predictions) {
+                const canvas = document.getElementById("overlayCanvas");
+                const ctx = canvas.getContext("2d");
+                const video = document.getElementById("cameraVideo");
+
+                // Reset canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (!video.videoWidth || !video.videoHeight) return;
+
+                // ----- SCALE UNTUK OBJECT-FIT CONTAIN -----
+                const vw = video.videoWidth;
+                const vh = video.videoHeight;
+
+                const cw = video.clientWidth;
+                const ch = video.clientHeight;
+
+                const videoRatio = vw / vh;
+                const clientRatio = cw / ch;
+
+                let scale, offsetX = 0,
+                    offsetY = 0;
+
+                if (videoRatio > clientRatio) {
+                    // video lebih lebar → top/bottom letterbox
+                    scale = cw / vw;
+                    offsetY = (ch - vh * scale) / 2;
+                } else {
+                    // video lebih tinggi → side letterbox
+                    scale = ch / vh;
+                    offsetX = (cw - vw * scale) / 2;
+                }
+
+                // Loop all predictions
+                predictions.forEach(pred => {
+
+                    const x = (pred.x - pred.width / 2) * scale + offsetX;
+                    const y = (pred.y - pred.height / 2) * scale + offsetY;
+                    const w = pred.width * scale;
+                    const h = pred.height * scale;
+
+                    const color =
+                        pred.class === "aktif" ? "blue" :
+                        pred.class === "pasif" ? "orange" :
+                        pred.class === "makan" ? "green" :
+                        "red";
+
+                    // Draw bounding box
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(x, y, w, h);
+
+                    // Label
+                    ctx.fillStyle = color;
+                    ctx.font = "16px Arial";
+                    ctx.fillText(
+                        `${pred.class} (${(pred.confidence * 100).toFixed(1)}%)`,
+                        x,
+                        y - 5
+                    );
+                });
+            }
+
+            // Sinkronisasi canvas dan video
+            function syncCanvasSize() {
+                const video = document.getElementById("cameraVideo");
+                const canvas = document.getElementById("overlayCanvas");
+
+                // Set canvas ukuran sesuai tampilan video, bukan videoWidth
+                canvas.width = video.clientWidth;
+                canvas.height = video.clientHeight;
+
+                canvas.style.width = video.clientWidth + "px";
+                canvas.style.height = video.clientHeight + "px";
+            }
+
+
+            video.addEventListener("loadeddata", syncCanvasSize);
+            window.addEventListener("resize", syncCanvasSize);
+
+            // Capture tiap 5 detik
+            setInterval(captureFrame, 5000);
+
+
+        });
     </script>
 @endpush
