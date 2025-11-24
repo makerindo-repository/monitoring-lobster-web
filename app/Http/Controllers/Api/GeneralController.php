@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\EdgeComputingResource;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Http;
 
 class GeneralController extends Controller
 {
@@ -157,57 +157,57 @@ class GeneralController extends Controller
 
         return response()->json(['status' => 'success', 'messages' => 'success']);
     }
-public function registrationNode(Request $request)
-{
-    $category = strtolower($request->category);
+    public function registrationNode(Request $request)
+    {
+        $category = strtolower($request->category);
 
-    if (empty($category)) {
-        return response()->json(['status' => 'fail', 'messages' => 'Category cannot be empty'], 400);
-    }
-
-    $dateNow = now();
-    $picture_genba = null;
-    $signature = null;
-    $path_image = '';
-
-    try {
-        if ($category == 'edge') {
-            $path_image = 'edge_computing/';
-            $data = EdgeComputing::findOrFail($request->id);
-        } elseif ($category == 'node') {
-            $path_image = 'iot_node/';
-            $data = IOTNode::findOrFail($request->id);
-        } else {
-            return response()->json(['status' => 'fail', 'messages' => 'Invalid category'], 400);
-        }
-    } catch (ModelNotFoundException $exception) {
-        return response()->json(['status' => 'fail', 'messages' => 'Data not found'], 404);
-    }
-
-    try {
-        if ($request->hasFile('picture')) {
-            $picture_genba = $this->image_intervention($request->file('picture'), 'images/' . $path_image . 'genba/');
-        }
-        if ($request->hasFile('signature')) {
-            $signature = $this->image_intervention($request->file('signature'), 'images/' . $path_image . 'signature/');
+        if (empty($category)) {
+            return response()->json(['status' => 'fail', 'messages' => 'Category cannot be empty'], 400);
         }
 
-        $payload = [
-            'activated_by' => $request->user_id,
-            'activated_at' => $dateNow,
-            'picture_genba' => $picture_genba,
-            'signature' => $signature,
-            'lat' => $request->lat ?? null,
-            'lng' => $request->lng ?? null
-        ];
+        $dateNow = now();
+        $picture_genba = null;
+        $signature = null;
+        $path_image = '';
 
-        $data->update($payload);
+        try {
+            if ($category == 'edge') {
+                $path_image = 'edge_computing/';
+                $data = EdgeComputing::findOrFail($request->id);
+            } elseif ($category == 'node') {
+                $path_image = 'iot_node/';
+                $data = IOTNode::findOrFail($request->id);
+            } else {
+                return response()->json(['status' => 'fail', 'messages' => 'Invalid category'], 400);
+            }
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['status' => 'fail', 'messages' => 'Data not found'], 404);
+        }
 
-        return response()->json(['status' => 'success', 'messages' => 'Data updated successfully']);
-    } catch (\Exception $exception) {
-        return response()->json(['status' => 'error', 'messages' => $exception->getMessage()], 500);
+        try {
+            if ($request->hasFile('picture')) {
+                $picture_genba = $this->image_intervention($request->file('picture'), 'images/' . $path_image . 'genba/');
+            }
+            if ($request->hasFile('signature')) {
+                $signature = $this->image_intervention($request->file('signature'), 'images/' . $path_image . 'signature/');
+            }
+
+            $payload = [
+                'activated_by' => $request->user_id,
+                'activated_at' => $dateNow,
+                'picture_genba' => $picture_genba,
+                'signature' => $signature,
+                'lat' => $request->lat ?? null,
+                'lng' => $request->lng ?? null
+            ];
+
+            $data->update($payload);
+
+            return response()->json(['status' => 'success', 'messages' => 'Data updated successfully']);
+        } catch (\Exception $exception) {
+            return response()->json(['status' => 'error', 'messages' => $exception->getMessage()], 500);
+        }
     }
-}
 
     public function listActivatedNode(Request $request): JsonResponse
     {
@@ -390,7 +390,7 @@ public function registrationNode(Request $request)
         return response()->json([
             'status' => 'success',
             'data' => MonitoringTelemetry::where('iot_node_serial_number', $request->n)->latest('created_at')->limit(10)->get(),
-            'treshold' => Treshold::select('iot_node_serial_number','variable', 'value_min','value_max')->get()
+            'treshold' => Treshold::select('iot_node_serial_number', 'variable', 'value_min', 'value_max')->get()
 
         ]);
     }
@@ -558,18 +558,18 @@ public function registrationNode(Request $request)
     }
 
     public function image_intervention($image, $path)
-{
-    $name = strtoupper(Str::random(5)) . '-' . rand() . '-' . time() . '.jpg';
+    {
+        $name = strtoupper(Str::random(5)) . '-' . rand() . '-' . time() . '.jpg';
 
-    if (!file_exists($path)) {
-        mkdir($path, 0755, true);
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+
+        $imageResize = Image::make($image->getRealPath());
+        $imageResize->save($path . $name);
+
+        return $path . $name;
     }
-
-    $imageResize = Image::make($image->getRealPath());
-    $imageResize->save($path . $name);
-
-    return $path . $name;
-}
 
 
     public function storeDataSensors(Request $request): JsonResponse
@@ -621,36 +621,36 @@ public function registrationNode(Request $request)
 
     public function newDashboard(Request $request, $id): JsonResponse
     {
-         $monitoringTelemetry1 = MonitoringTelemetry::query()->with('treshold')
-        ->where('iot_node_serial_number', $id)
-        ->orderByDesc('created_at')
-        ->limit(10)
-        ->get();
+        $monitoringTelemetry1 = MonitoringTelemetry::query()->with('treshold')
+            ->where('iot_node_serial_number', $id)
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
 
         $monitoringTelemetry = MonitoringTelemetry::query()
-        ->with('treshold')
-        ->where('iot_node_serial_number', $id)
-        ->whereRaw('MINUTE(created_at) % 5 = 0')
-        ->where('created_at', '>=', now()->subDay())
-        ->orderBy('created_at')
-        ->get();
+            ->with('treshold')
+            ->where('iot_node_serial_number', $id)
+            ->whereRaw('MINUTE(created_at) % 5 = 0')
+            ->where('created_at', '>=', now()->subDay())
+            ->orderBy('created_at')
+            ->get();
 
-    $selectedData = collect($monitoringTelemetry)->groupBy(function ($item) {
-        return $item->created_at->format('Y-m-d H:i');
-    })->values()->toArray();
+        $selectedData = collect($monitoringTelemetry)->groupBy(function ($item) {
+            return $item->created_at->format('Y-m-d H:i');
+        })->values()->toArray();
 
-    $firstEntryForEachInterval = collect($selectedData)->map(function ($data) {
-        return $data[0];
-    });
+        $firstEntryForEachInterval = collect($selectedData)->map(function ($data) {
+            return $data[0];
+        });
 
-    return response()->json([
-        'latest' => (count($monitoringTelemetry1) > 0) ? $monitoringTelemetry1[0] : null,
-        'data' => $firstEntryForEachInterval,
-    ]);
-
+        return response()->json([
+            'latest' => (count($monitoringTelemetry1) > 0) ? $monitoringTelemetry1[0] : null,
+            'data' => $firstEntryForEachInterval,
+        ]);
     }
 
-    public function checkEmail(Request $request) : JsonResponse {
+    public function checkEmail(Request $request): JsonResponse
+    {
         $request->validate([
             'email' => ['required', 'email']
         ]);
@@ -669,7 +669,8 @@ public function registrationNode(Request $request)
         ]);
     }
 
-    public function resetPassword(Request $request) : JsonResponse {
+    public function resetPassword(Request $request): JsonResponse
+    {
         $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],
             'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed']
@@ -682,14 +683,14 @@ public function registrationNode(Request $request)
         ]);
 
         return response()->json([
-            'message'=> 'Kata sandi berhasil diubah, silahkan log in kembali!'
+            'message' => 'Kata sandi berhasil diubah, silahkan log in kembali!'
         ]);
     }
     public function getSensors(Request $request): JsonResponse
     {
         $sensor = Sensor::orderBy('id', 'asc')
-        ->select('id', 'namaSensor')
-        ->get();
+            ->select('id', 'namaSensor')
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -715,138 +716,139 @@ public function registrationNode(Request $request)
         ]);
     }
     public function updateSensor(Request $request, $id)
-{
-    $sensor = Sensor::findOrFail($id);
-    $request->validate([
-        'namaSensor' => 'required|unique:sensors,namaSensor,' . $id
-    ]);
-    $sensor->update(['namaSensor' => $request->input('namaSensor')]);
-
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Sukses update.'
-    ]);
-}
-public function getTresholdWeb(Request $request): JsonResponse
     {
-        $thresholds = Treshold::query()
-        ->select('id', 'iot_node_serial_number', 'variable', 'value_min', 'value_max', 'rules','value')
-        ->where('iot_node_serial_number', $request->iot_node_serial_number)
-        ->get();
+        $sensor = Sensor::findOrFail($id);
+        $request->validate([
+            'namaSensor' => 'required|unique:sensors,namaSensor,' . $id
+        ]);
+        $sensor->update(['namaSensor' => $request->input('namaSensor')]);
 
-    return response()->json([
-        'status' => 'success',
-        'data' => $thresholds,
-    ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Sukses update.'
+        ]);
     }
-public function getTreshold(Request $request): JsonResponse
+    public function getTresholdWeb(Request $request): JsonResponse
     {
         $thresholds = Treshold::query()
-        ->select('id', 'iot_node_serial_number', 'variable', 'value_min', 'value_max', 'rules')
-        ->where('iot_node_serial_number', $request->iot_node_serial_number)
-        ->get();
+            ->select('id', 'iot_node_serial_number', 'variable', 'value_min', 'value_max', 'rules', 'value')
+            ->where('iot_node_serial_number', $request->iot_node_serial_number)
+            ->get();
 
-    return response()->json([
-        'status' => 'success',
-        'data' => $thresholds,
-    ]);
+        return response()->json([
+            'status' => 'success',
+            'data' => $thresholds,
+        ]);
+    }
+    public function getTreshold(Request $request): JsonResponse
+    {
+        $thresholds = Treshold::query()
+            ->select('id', 'iot_node_serial_number', 'variable', 'value_min', 'value_max', 'rules')
+            ->where('iot_node_serial_number', $request->iot_node_serial_number)
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $thresholds,
+        ]);
     }
     public function storeTreshold(Request $request): JsonResponse
-{
-    $validation = Validator::make($request->all(), [
-        'iot_node_serial_number' => ['required', 'string'],
-        'variable' => ['required', 'string'],
-        'value_min' => ['required', 'numeric'],
-        'value_max' => ['required', 'numeric'],
-        'rules' => ['nullable', 'string'],
-    ]);
-
-    if ($validation->fails()) {
-        return response()->json([
-            'status' => 'fail',
-            'message' => 'Data gagal dibuat. Periksa input Anda.',
-            'errors' => $validation->errors(),
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
-    // Coba menyimpan data
-    try {
-        $threshold =  $treshold= Treshold::insert($request->only([
-            'iot_node_serial_number',
-            'variable',
-            'value_min',
-            'value_max',
-            'rules'
-        ]) + [
-            'created_at' => now('Asia/Jakarta')
+    {
+        $validation = Validator::make($request->all(), [
+            'iot_node_serial_number' => ['required', 'string'],
+            'variable' => ['required', 'string'],
+            'value_min' => ['required', 'numeric'],
+            'value_max' => ['required', 'numeric'],
+            'rules' => ['nullable', 'string'],
         ]);
 
-        if ($threshold) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Data berhasil dibuat',
-            ], Response::HTTP_CREATED);
-        } else {
+        if ($validation->fails()) {
             return response()->json([
                 'status' => 'fail',
-                'message' => 'Data gagal dibuat!',
+                'message' => 'Data gagal dibuat. Periksa input Anda.',
+                'errors' => $validation->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        // Coba menyimpan data
+        try {
+            $threshold =  $treshold = Treshold::insert($request->only([
+                'iot_node_serial_number',
+                'variable',
+                'value_min',
+                'value_max',
+                'rules'
+            ]) + [
+                'created_at' => now('Asia/Jakarta')
+            ]);
+
+            if ($threshold) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Data berhasil dibuat',
+                ], Response::HTTP_CREATED);
+            } else {
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Data gagal dibuat!',
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Terjadi kesalahan internal server.',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'fail',
-            'message' => 'Terjadi kesalahan internal server.',
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
-}
 
-public function updateTreshold(Request $request)
-{
-    try {
-        $dataToUpdate = $request->all();
+    public function updateTreshold(Request $request)
+    {
+        try {
+            $dataToUpdate = $request->all();
 
-        foreach ($dataToUpdate as $key => $value) {
-            $parts = explode('value_min', $key);
+            foreach ($dataToUpdate as $key => $value) {
+                $parts = explode('value_min', $key);
 
-            if (count($parts) == 2) {
-                $sensorName = $parts[1];
+                if (count($parts) == 2) {
+                    $sensorName = $parts[1];
 
-                Treshold::where('variable', $sensorName)->where('iot_node_serial_number', $request->iot_node_serial_number)
-                ->update([
-                    'value_min' => $value,
-                ]);
+                    Treshold::where('variable', $sensorName)->where('iot_node_serial_number', $request->iot_node_serial_number)
+                        ->update([
+                            'value_min' => $value,
+                        ]);
+                }
+
+                $parts = explode('value_max', $key);
+
+                if (count($parts) == 2) {
+                    $sensorName = $parts[1];
+                    Treshold::where('variable', $sensorName)->where('iot_node_serial_number', $request->iot_node_serial_number)
+                        ->update([
+                            'value_max' => $value,
+                        ]);
+                }
+                $parts = explode('rules', $key);
+
+                if (count($parts) == 2) {
+                    $sensorName = $parts[1];
+                    Treshold::where('variable', $sensorName)->where('iot_node_serial_number', $request->iot_node_serial_number)
+                        ->update([
+                            'rules' => $value,
+                        ]);
+                }
             }
 
-            $parts = explode('value_max', $key);
-
-            if (count($parts) == 2) {
-                $sensorName = $parts[1];
-                Treshold::where('variable', $sensorName)->where('iot_node_serial_number', $request->iot_node_serial_number)
-                ->update([
-                    'value_max' => $value,
-                ]);
-            }
-            $parts = explode('rules', $key);
-
-            if (count($parts) == 2) {
-                $sensorName = $parts[1];
-                Treshold::where('variable', $sensorName)->where('iot_node_serial_number', $request->iot_node_serial_number)
-                ->update([
-                    'rules' => $value,
-                ]);
-            }
+            return response()->json(['status' => 'success', 'message' => 'Data berhasil diperbarui']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan saat mengupdate data.']);
         }
-
-        return response()->json(['status' => 'success', 'message' => 'Data berhasil diperbarui']);
-    } catch (\Exception $e) {
-        return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan saat mengupdate data.']);
-    }}
-public function getIotNode(Request $request): JsonResponse
+    }
+    public function getIotNode(Request $request): JsonResponse
     {
         $location = IOTNode::query()->with('edge_computing')
-        // ->select('id','lat','lng')
-        ->where('edge_computing_id',$request->edge_computing_id)
-        ->get();
+            // ->select('id','lat','lng')
+            ->where('edge_computing_id', $request->edge_computing_id)
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -854,4 +856,78 @@ public function getIotNode(Request $request): JsonResponse
         ]);
     }
 
+    // Post frame untuk deteksi 
+    public function detect(Request $request)
+    {
+        $base64 = $request->image;
+
+        // Remove base64 header
+        $base64 = preg_replace('/^data:image\/\w+;base64,/', '', $base64);
+
+        // Decode ke binary
+        $binary = base64_decode($base64);
+
+        // Simpan sebagai file sementara
+        $temp = storage_path('app/frame.png');
+        file_put_contents($temp, $binary);
+
+        $rfKey = env('ROBOFLOW_API_KEY');
+
+        // Kirim ke Roboflow sebagai file upload beneran
+        $response = Http::attach(
+            'file',
+            file_get_contents($temp),
+            'frame.png'
+        )->post("https://detect.roboflow.com/safa-zgcde/2?api_key=$rfKey");
+
+        // Hapus file temp
+        @unlink($temp);
+
+        $json = $response->json();
+        $pred = $json['predictions'] ?? [];
+
+        if (empty($pred)) {
+            return response()->json([
+                'total' => 0,
+                'classes' => [],
+                'raw_predictions' => $pred
+            ]);
+        }
+
+        $total = count($pred);
+        $classes = collect($pred)->groupBy('class')->map->count();
+
+        return response()->json([
+            'total' => $total,
+            'classes' => $classes,
+            'raw_predictions' => $pred
+        ]);
+    }
+
+    // Proxy frame sebelum di-post ke endpoint model
+    public function proxyVideo($encoded)
+    {
+        $url = base64_decode($encoded);
+
+        $ch = curl_init($url);
+
+        curl_setopt_array($ch, [
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_RETURNTRANSFER => false,
+            CURLOPT_HEADER => false,
+            CURLOPT_BUFFERSIZE => 1024 * 16,
+            CURLOPT_USERAGENT => 'Mozilla/5.0', // penting!
+            CURLOPT_HTTPHEADER => [
+                'Accept: video/mp4, */*'
+            ]
+        ]);
+
+        header('Content-Type: video/mp4');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: *');
+
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
 }
