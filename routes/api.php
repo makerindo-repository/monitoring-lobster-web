@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('Api')->group(function() {
+Route::namespace('Api')->group(function () {
 
     /* GET DATA MARKER EDGE */
     Route::get('/marker-edge', 'GeneralController@getMarkerEdge')->name('edges-marker');
@@ -73,8 +73,6 @@ Route::namespace('Api')->group(function() {
     Route::post('/treshold', 'GeneralController@updateTreshold');
 
     Route::get('/lokasi', 'GeneralController@getIotNode');
-
-
-
-
+    Route::post('/detect', 'GeneralController@detect');
+    Route::get('/stream/{encoded}', 'GeneralController@proxyVideo');
 });
