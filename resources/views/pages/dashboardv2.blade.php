@@ -96,7 +96,7 @@
                                     <small class="text-secondary">Total Lobster</small>
                                     <div class="col-md-6">
                                         <h2 class="fw-bold">
-                                            10
+                                            {{ $statistic['lobster_all'] }}
                                             <small style="font-size:.5em; font-weight:normal;">Ekor</small>
                                         </h2>
                                     </div>
@@ -391,233 +391,12 @@
 
 @push('footer')
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/phAir.js') }}"></script>
-    <script src="{{ asset('js/CodSensor.js') }}"></script>
-    <script src="{{ asset('js/NitratSensor.js') }}"></script>
-    <script src="{{ asset('js/TssSensor.js') }}"></script>
-    <script src="{{ asset('js/DissolvedOxygen.js') }}"></script>
-    <script src="{{ asset('js/ArusAir.js') }}"></script>
-    <script src="{{ asset('js/Turbidity.js') }}"></script>
-    <script src="{{ asset('js/Salinity.js') }}"></script>
-    <script src="{{ asset('js/OrpSensor.js') }}"></script>
-    <script src="{{ asset('js/TdsSensor.js') }}"></script>
-    <script src="{{ asset('js/temperatureAir.js') }}"></script>
-    <script src="{{ asset('js/TinggiAir.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endpush
 
 @push('script')
-    {{-- <script>
-        const sensors = [
-            'dissolver-oxygen',
-            'turbidity',
-            'salinity',
-            'cod',
-            'ph',
-            'orp',
-            'tds',
-            'nitrat',
-            'temperature-air',
-            'debit-air',
-            'tss',
-
-        ];
-        const sensorColumn = [
-            'dissolver_oxygen',
-            'turbidity',
-            'salinity',
-            'cod',
-            'ph',
-            'orp',
-            'tds',
-            'nitrat',
-            'temperature_air',
-            'debit_air',
-            'tss',
-            'water_level_cm',
-            'water_level_persen',
-            'status_pompa',
-        ]
-
-        let charts = []
-        let intervalId
-
-        Echo.channel('MonitoringTelemetryEvent.683')
-            .listen(`MonitoringTelemetryEvent`, function(data) {
-                console.log(data);
-                console.log('received!');
-            });
-
-        const eNode = document.querySelector('select[name="node"]')
-
-        eNode.addEventListener('change', e => {
-            if (intervalId) {
-                stopInterval()
-            }
-            const API_URL = `${_base_url}/api/monitoringv2/` + e.target.value;
-            fetch(API_URL)
-                .then(resp => resp.json())
-                .then(resp => {
-                    if (resp.latest) {
-                        for (const sensor of sensors) {
-                            document.querySelector('#status-' + sensor + ' span').innerHTML = parseFloat(resp
-                                .latest[sensor.replace('-', '_')]).toFixed(2)
-                        }
-                        document.querySelector('#status-water-level .cm').textContent = resp.latest[
-                            'water_level_cm'] + " cm"
-                        document.querySelector('#status-water-level .persen').textContent = resp.latest[
-                            'water_level_persen'] + "%"
-                        document.querySelector('#status-water-level .progress-bar').style.height = resp.latest[
-                            'water_level_persen'] + '%'
-                    }
-
-                    if (resp.data.length > 0) {
-                        const [phData, phTreshold] = [resp.data.map(d => [d.ph, d.created_at]), resp.data[0]
-                            .treshold.find(d => d.variable == 'ph')
-                        ];
-                        const [codData, codTreshold] = [resp.data.map(d => [d.cod, d.created_at]), resp.data[0]
-                            .treshold.find(d => d.variable == 'cod')
-                        ];
-                        const [nitratData, nitratTreshold] = [resp.data.map(d => [d.nitrat, d.created_at]), resp
-                            .data[0].treshold.find(d => d.variable == 'nitrat')
-                        ];
-                        const [tssData, tssTreshold] = [resp.data.map(d => [d.tss, d.created_at]), resp.data[0]
-                            .treshold.find(d => d.variable == 'tss')
-                        ];
-                        const [debitData, debitTreshold] = [resp.data.map(d => [d.debit_air, d.created_at]),
-                            resp.data[0].treshold.find(d => d.variable == 'debit_air')
-                        ];
-                        const [oxygenData, oxygenTreshold] = [resp.data.map(d => [d.dissolver_oxygen, d
-                            .created_at
-                        ]), resp.data[0].treshold.find(d => d.variable == 'dissolver_oxygen')];
-                        const [turbidityData, turbidityTreshold] = [resp.data.map(d => [d.turbidity, d
-                            .created_at
-                        ]), resp.data[0].treshold.find(d => d.variable == 'turbidity')];
-                        const [salinityData, salinityTreshold] = [resp.data.map(d => [d.salinity, d
-                            .created_at
-                        ]), resp.data[0].treshold.find(d => d.variable == 'salinity')];
-                        const [tdsData, tdsTreshold] = [resp.data.map(d => [d.tds, d.created_at]), resp.data[0]
-                            .treshold.find(d => d.variable == 'tds')
-                        ];
-                        const [orpData, orpTreshold] = [resp.data.map(d => [d.orp, d.created_at]), resp.data[0]
-                            .treshold.find(d => d.variable == 'orp')
-                        ];
-                        const [temperatureData, temperatureTreshold] = [resp.data.map(d => [d.temperature_air, d
-                            .created_at
-                        ]), resp.data[0].treshold.find(d => d.variable == 'temperature_air')];
-                        const [tinggiAirdata, tinggiairTreshold] = [resp.data.map(d => [d.water_level_cm, d
-                            .created_at
-                        ]), resp.data[0].treshold.find(d => d.variable == 'water_level_cm')];
-
-                        var charts = [
-                            new phAir(phData, phTreshold),
-                            new CodSensor(codData, codTreshold),
-                            new NitratSensor(nitratData, nitratTreshold),
-                            new TssSensor(tssData, tssTreshold),
-                            new ArusAir(debitData, debitTreshold),
-                            new DissolvedOxygen(oxygenData, oxygenTreshold),
-                            new TurbiditySensor(turbidityData, turbidityTreshold),
-                            new SalinitySensor(salinityData, salinityTreshold),
-                            new TdsSensor(tdsData, tdsTreshold),
-                            new OrpSensor(orpData, orpTreshold),
-                            new TemperatureAir(temperatureData, temperatureTreshold),
-                            new TinggiAir(tinggiAirdata, tinggiairTreshold),
-                        ];
-                        charts.forEach(chart => chart.init());
-                    }
-                    startInterval(API_URL)
-                });
-        })
-
-        function startInterval(url) {
-            intervalId = setInterval(function() {
-                fetch(url)
-                    .then(resp => resp.json())
-                    .then(resp => {
-                        if (resp.latest) {
-                            for (const sensor of sensors) {
-                                document.querySelector('#status-' + sensor + ' span').innerHTML = parseFloat(
-                                    resp.latest[sensor.replace('-', '_')]).toFixed(2);
-                            }
-
-                            document.querySelector('#status-water-level .cm').textContent = resp.latest[
-                                'water_level_cm'] + " cm";
-                            document.querySelector('#status-water-level .persen').textContent = resp.latest[
-                                'water_level_persen'] + "%";
-                            document.querySelector('#status-water-level .progress-bar').style.height = resp
-                                .latest['water_level_persen'] + '%';
-                        }
-
-                        if (resp.data.length > 0) {
-                            const [phData, phTreshold] = [resp.data.map(d => [d.ph, d.created_at]), resp.data[0]
-                                .treshold.find(d => d.variable == 'ph')
-                            ];
-                            const [codData, codTreshold] = [resp.data.map(d => [d.cod, d.created_at]), resp
-                                .data[0].treshold.find(d => d.variable == 'cod')
-                            ];
-                            const [nitratData, nitratTreshold] = [resp.data.map(d => [d.nitrat, d.created_at]),
-                                resp.data[0].treshold.find(d => d.variable == 'nitrat')
-                            ];
-                            const [tssData, tssTreshold] = [resp.data.map(d => [d.tss, d.created_at]), resp
-                                .data[0].treshold.find(d => d.variable == 'tss')
-                            ];
-                            const [debitData, debitTreshold] = [resp.data.map(d => [d.debit_air, d.created_at]),
-                                resp.data[0].treshold.find(d => d.variable == 'debit_air')
-                            ];
-                            const [oxygenData, oxygenTreshold] = [resp.data.map(d => [d.dissolver_oxygen, d
-                                .created_at
-                            ]), resp.data[0].treshold.find(d => d.variable == 'dissolver_oxygen')];
-                            const [turbidityData, turbidityTreshold] = [resp.data.map(d => [d.turbidity, d
-                                .created_at
-                            ]), resp.data[0].treshold.find(d => d.variable == 'turbidity')];
-                            const [salinityData, salinityTreshold] = [resp.data.map(d => [d.salinity, d
-                                .created_at
-                            ]), resp.data[0].treshold.find(d => d.variable == 'salinity')];
-                            const [tdsData, tdsTreshold] = [resp.data.map(d => [d.tds, d.created_at]), resp
-                                .data[0].treshold.find(d => d.variable == 'tds')
-                            ];
-                            const [orpData, orpTreshold] = [resp.data.map(d => [d.orp, d.created_at]), resp
-                                .data[0].treshold.find(d => d.variable == 'orp')
-                            ];
-                            const [temperatureData, temperatureTreshold] = [resp.data.map(d => [d
-                                .temperature_air, d.created_at
-                            ]), resp.data[0].treshold.find(d => d.variable == 'temperature_air')];
-                            const [tinggiAirdata, tinggiairTreshold] = [resp.data.map(d => [d.water_level_cm, d
-                                .created_at
-                            ]), resp.data[0].treshold.find(d => d.variable == 'water_level_cm')];
-
-
-                            var charts = [
-                                new phAir(phData, phTreshold),
-                                new CodSensor(codData, codTreshold),
-                                new NitratSensor(nitratData, nitratTreshold),
-                                new TssSensor(tssData, tssTreshold),
-                                new ArusAir(debitData, debitTreshold),
-                                new DissolvedOxygen(oxygenData, oxygenTreshold),
-                                new TurbiditySensor(turbidityData, turbidityTreshold),
-                                new SalinitySensor(salinityData, salinityTreshold),
-                                new TdsSensor(tdsData, tdsTreshold),
-                                new OrpSensor(orpData, orpTreshold),
-                                new TemperatureAir(temperatureData, temperatureTreshold),
-                                new TinggiAir(tinggiAirdata, tinggiairTreshold),
-                            ];
-                            charts.forEach(a => {
-                                a.chart.update();
-                            });
-                        }
-
-                    });
-            }, 300000);
-        }
-
-
-        function stopInterval() {
-            clearInterval(intervalId);
-        }
-    </script> --}}
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const video = document.getElementById("cameraVideo");
@@ -649,7 +428,6 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("RAW: ", data);
                         updateUI(data);
                         drawBoundingBoxes(data.raw_predictions || []);
                     })

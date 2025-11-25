@@ -38,6 +38,7 @@ class DashboardController extends Controller
             'node_active' => IOTNode::whereNotNull('activated_at')->count(),
             'kja' =>  Kja::count(),
             'camera_active' => Camera::where('status', true)->count(),
+            'lobster_all' => Kja::sum('jumlah_lobster'),
         ];
         $payload['registration_history'] = IOTNode::with(['user', 'city'])->whereNotNull('activated_at')->get();
         $payload['maintenance_history']  = Maintenance::with('iot_node')->latest()->limit(5)->get();
