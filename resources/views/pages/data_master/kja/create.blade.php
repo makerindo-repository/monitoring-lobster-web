@@ -44,6 +44,11 @@
                                     value="{{ old('dimensi') }}" placeholder="Masukan Dimensi" required min="0">
                             </div>
                             <div class="form-group mb-2">
+                                <label for="jumlah_lobster">Jumlah Lobster</label>
+                                <input type="number" step="1" name="jumlah_lobster" id="jumlah_lobster" class="form-control"
+                                    value="{{ old('jumlah_lobster') }}" placeholder="Masukan Jumlah Lobster" required min="0">
+                            </div>
+                            <div class="form-group mb-2">
                                 <label for="kondisi">Kondisi</label>
                                 <input type="text" name="kondisi" id="kondisi" class="form-control"
                                     value="{{ old('kondisi') }}" placeholder="Masukan Kondisi" required>

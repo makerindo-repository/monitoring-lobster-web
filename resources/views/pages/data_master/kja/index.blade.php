@@ -33,6 +33,7 @@
                                     <th scope="col" class="text-center">Latitude</th>
                                     <th scope="col" class="text-center">Longitude</th>
                                     <th scope="col" class="text-center">Dimensi</th>
+                                    <th scope="col" class="text-center">Jumlah Lobster</th>
                                     <th scope="col" class="text-center">Kondisi</th>
                                     <th scope="col" class="text-center">Aksi</th>
                                 </tr>
@@ -45,6 +46,7 @@
                                         <td class="text-center">{{ $row->latitude }}</td>
                                         <td class="text-center">{{ $row->longitude }}</td>
                                         <td class="text-center">{{ $row->dimensi }}</td>
+                                        <td class="text-center">{{ $row->jumlah_lobster }}</td>
                                         <td class="text-center">{{ $row->kondisi }}</td>
                                         <td class="text-center">
                                             <a href="{{ route($route . 'edit', $row->id) }}"
