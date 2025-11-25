@@ -55,6 +55,8 @@ class DashboardController extends Controller
         }
 
         $payload['video'] = $video->first();
+        
+        $payload['kjas'] = Kja::get(['nomor_kja', 'jumlah_lobster']); 
 
         $payload['logPakan'] = LogPakan::latest()->paginate(10);
 

@@ -112,6 +112,21 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row g-2">
+                                    <small class="text-secondary">Jumlah Lobster per KJA</small>
+                                    @foreach ($kjas as $kja)
+                                        <div class="col-4">
+                                            <p class="fw-bold m-0" style="font-size: 0.9rem;">{{ $kja->nomor_kja }}</p>
+                                            <p style="font-size: 0.8rem;">{{ $kja->jumlah_lobster }} Ekor</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row g-2">
                                     <small class="text-secondary">Total Kamera Aktif</small>
                                     <div class="col-md-6">
                                         <h2 class="fw-bold">
@@ -121,7 +136,7 @@
                                     </div>
                                     <div class="col-md-6 text-end">
                                         <i class="rounded-circle p-3 fs-5 fa-solid fa-camera my-auto"
-                                            style="color: #d00000; background-color: rgb(208, 0, 0, 0.3)"></i>
+                                            style="color: #03bd2b; background-color: rgb(3, 189, 43, 0.3)"></i>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +212,8 @@
                                 </option>
                             @endforeach
                         </select>
-                        <button class="btn text-white ms-2 rounded" type="submit" style="background-color: #FB9E3A;">Muat
+                        <button class="btn text-white ms-2 rounded" type="submit"
+                            style="background-color: #FB9E3A;">Muat
                             Data</button>
                     </div>
                 </form>
