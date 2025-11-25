@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class KjaController extends Controller
 {
+    public $view;
+    public $route;
+
     public function __construct()
     {
         $this->view = 'pages.data_master.kja.';
@@ -50,6 +53,7 @@ class KjaController extends Controller
             'longitude' => 'required',
             'dimensi' => 'required|numeric|min:0',
             'kondisi' => 'required',
+            'jumlah_lobster' => 'required|numeric|min:0',
         ], [
             'nomor_kja.required' => 'Nomor KJA wajib diisi',
             'nomor_kja.unique' => 'Nomor KJA sudah ada',
@@ -59,6 +63,9 @@ class KjaController extends Controller
             'dimensi.numeric' => 'Dimensi harus berupa angka',
             'dimensi.min' => 'Dimensi harus lebih dari 0',
             'kondisi.required' => 'Kondisi wajib diisi',
+            'jumlah_lobster.required' => 'Jumlah lobster wajib diisi',
+            'jumlah_lobster.numeric' => 'Jumlah lobster harus berupa angka',
+            'jumlah_lobster.min' => 'Jumlah lobster harus lebih dari 0',
         ]);
 
         Kja::create([
@@ -67,6 +74,7 @@ class KjaController extends Controller
             'longitude' => trim($request->longitude),
             'dimensi' => $request->dimensi,
             'kondisi' => $request->kondisi,
+            'jumlah_lobster' => $request->jumlah_lobster,
         ]);
 
         return redirect()->route($this->route . 'index')->with('success', 'store');
@@ -112,6 +120,7 @@ class KjaController extends Controller
             'longitude' => 'required',
             'dimensi' => 'required|numeric|min:0',
             'kondisi' => 'required',
+            'jumlah_lobster' => 'required|numeric|min:0',
         ], [
             'nomor_kja.required' => 'Nomor KJA wajib diisi',
             'nomor_kja.unique' => 'Nomor KJA sudah ada',
@@ -121,6 +130,9 @@ class KjaController extends Controller
             'dimensi.numeric' => 'Dimensi harus berupa angka',
             'dimensi.min' => 'Dimensi harus lebih dari 0',
             'kondisi.required' => 'Kondisi wajib diisi',
+            'jumlah_lobster.required' => 'Jumlah lobster wajib diisi',
+            'jumlah_lobster.numeric' => 'Jumlah lobster harus berupa angka',
+            'jumlah_lobster.min' => 'Jumlah lobster harus lebih dari 0',
         ]);
 
         $kja = Kja::findOrFail($id);
@@ -131,6 +143,7 @@ class KjaController extends Controller
             'longitude' => trim($request->longitude),
             'dimensi' => $request->dimensi,
             'kondisi' => $request->kondisi,
+            'jumlah_lobster' => $request->jumlah_lobster,
         ]);
 
         return redirect()->route($this->route . 'index')->with('success', 'update');
