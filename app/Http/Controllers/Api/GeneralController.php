@@ -860,27 +860,19 @@ class GeneralController extends Controller
     public function detect(Request $request)
     {
         $base64 = $request->image;
-
-        // Remove base64 header
         $base64 = preg_replace('/^data:image\/\w+;base64,/', '', $base64);
-
-        // Decode ke binary
         $binary = base64_decode($base64);
 
-        // Simpan sebagai file sementara
         $temp = storage_path('app/frame.png');
         file_put_contents($temp, $binary);
 
-        $rfKey = env('ROBOFLOW_API_KEY');
-
-        // Kirim ke Roboflow sebagai file upload beneran
+        // Kirim ke FastAPI lewat subdomain
         $response = Http::attach(
-            'file',
+            'image',
             file_get_contents($temp),
             'frame.png'
-        )->post("https://detect.roboflow.com/safa-zgcde/2?api_key=$rfKey");
+        )->post("https://model.lobsens-unpad.web.id/predict");
 
-        // Hapus file temp
         @unlink($temp);
 
         $json = $response->json();
