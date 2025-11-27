@@ -378,6 +378,7 @@
                             <th scope="col" class="text-center">Timestamp</th>
                             <th scope="col" class="text-center">Jenis Pakan</th>
                             <th scope="col" class="text-center">Berat (Kg)</th>
+                            <th scope="col" class="text-center">KJA</th>
                             <th scope="col" class="text-center">Petugas</th>
                         </tr>
                     </thead>
@@ -387,6 +388,7 @@
                                 <td class="text-center">{{ $row->created_at }}</td>
                                 <td class="text-center">{{ $row->jenis_pakan }}</td>
                                 <td class="text-center">{{ $row->berat }}</td>
+                                <td class="text-center">{{ $row->kja->nomor_kja ?? '-' }}</td>
                                 <td class="text-center">{{ $row->petugas->nama }}</td>
                             </tr>
                         @empty
