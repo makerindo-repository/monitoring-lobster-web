@@ -7,7 +7,7 @@
         <p class="text-gray fs-7">Total {{ $data->count() }} data KJA yang ada di aplikasi.</p>
 
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-11">
                 <div class="card p-4 gap-4">
                     <div class="w-100 text-end">
                         <a href="{{ route($route . 'create') }}" class="btn btn-sm fw-bolder text-white"
@@ -28,25 +28,29 @@
                         <table class="table" style="font-size:.9em;">
                             <thead>
                                 <tr>
-                                    <th width="1%" scope="col">No</th>
+                                    {{-- <th width="1%" scope="col">No</th> --}}
+                                    <th scope="col" class="text-center">Timestamp</th>
                                     <th scope="col" class="text-center">Nomor KJA</th>
                                     <th scope="col" class="text-center">Latitude</th>
                                     <th scope="col" class="text-center">Longitude</th>
-                                    <th scope="col" class="text-center">Dimensi</th>
-                                    <th scope="col" class="text-center">Jumlah Lobster</th>
-                                    <th scope="col" class="text-center">Kondisi</th>
+                                    <th scope="col" class="text-center">Dimensi (m2)</th>
+                                    <th width="7.5%" scope="col" class="text-center">Jumlah Lobster</th>
+                                    <th width="10%" scope="col" class="text-center">Usia Lobster (minggu)</th>
+                                    <th scope="col" class="text-center">Kondisi KJA</th>
                                     <th scope="col" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($data as $row)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        {{-- <td class="text-center">{{ $loop->iteration }}</td> --}}
+                                        <td class="text-center" style="white-space: nowrap;">{{ $row->timestamp_input_usia ?? $row->created_at }}</td>
                                         <td class="text-center">{{ $row->nomor_kja }}</td>
                                         <td class="text-center">{{ $row->latitude }}</td>
                                         <td class="text-center">{{ $row->longitude }}</td>
                                         <td class="text-center">{{ $row->dimensi }}</td>
-                                        <td class="text-center">{{ $row->jumlah_lobster }}</td>
+                                        <td class="text-center">{{ $row->jumlah_lobster . " Ekor" }}</td>
+                                        <td class="text-center">{{ $row->usia_lobster ?? '-' }}</td>
                                         <td class="text-center">{{ $row->kondisi }}</td>
                                         <td class="text-center">
                                             <a href="{{ route($route . 'edit', $row->id) }}"

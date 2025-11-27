@@ -54,6 +54,7 @@ class KjaController extends Controller
             'dimensi' => 'required|numeric|min:0',
             'kondisi' => 'required',
             'jumlah_lobster' => 'required|numeric|min:0',
+            'usia_lobster' => 'required|numeric|min:0',
         ], [
             'nomor_kja.required' => 'Nomor KJA wajib diisi',
             'nomor_kja.unique' => 'Nomor KJA sudah ada',
@@ -66,6 +67,9 @@ class KjaController extends Controller
             'jumlah_lobster.required' => 'Jumlah lobster wajib diisi',
             'jumlah_lobster.numeric' => 'Jumlah lobster harus berupa angka',
             'jumlah_lobster.min' => 'Jumlah lobster harus lebih dari 0',
+            'usia_lobster.required' => 'Usia lobster wajib diisi',
+            'usia_lobster.numeric' => 'Usia lobster harus berupa angka',
+            'usia_lobster.min' => 'Usia lobster harus lebih dari 0',
         ]);
 
         Kja::create([
@@ -75,6 +79,8 @@ class KjaController extends Controller
             'dimensi' => $request->dimensi,
             'kondisi' => $request->kondisi,
             'jumlah_lobster' => $request->jumlah_lobster,
+            'usia_lobster' => $request->usia_lobster,
+            'timestamp_input_usia' => now(),
         ]);
 
         return redirect()->route($this->route . 'index')->with('success', 'store');
@@ -121,6 +127,7 @@ class KjaController extends Controller
             'dimensi' => 'required|numeric|min:0',
             'kondisi' => 'required',
             'jumlah_lobster' => 'required|numeric|min:0',
+            'usia_lobster' => 'required|numeric|min:0',
         ], [
             'nomor_kja.required' => 'Nomor KJA wajib diisi',
             'nomor_kja.unique' => 'Nomor KJA sudah ada',
@@ -133,9 +140,20 @@ class KjaController extends Controller
             'jumlah_lobster.required' => 'Jumlah lobster wajib diisi',
             'jumlah_lobster.numeric' => 'Jumlah lobster harus berupa angka',
             'jumlah_lobster.min' => 'Jumlah lobster harus lebih dari 0',
+            'usia_lobster.required' => 'Usia lobster wajib diisi',
+            'usia_lobster.numeric' => 'Usia lobster harus berupa angka',
+            'usia_lobster.min' => 'Usia lobster harus lebih dari 0',
         ]);
 
         $kja = Kja::findOrFail($id);
+
+        $data = [];
+
+        if ($request->usia_lobster != $kja->usia_lobster) {
+            $data = [
+                'timestamp_input_usia' => now(),
+            ];
+        }
 
         $kja->update([
             'nomor_kja' => $request->nomor_kja,
@@ -144,7 +162,8 @@ class KjaController extends Controller
             'dimensi' => $request->dimensi,
             'kondisi' => $request->kondisi,
             'jumlah_lobster' => $request->jumlah_lobster,
-        ]);
+            'usia_lobster' => $request->usia_lobster,
+        ] + $data);
 
         return redirect()->route($this->route . 'index')->with('success', 'update');
     }
