@@ -32,6 +32,7 @@
                                     <th scope="col" class="text-center">Pemberian Ke</th>
                                     <th scope="col" class="text-center">Jenis Pakan</th>
                                     <th scope="col" class="text-center">Berat (kg)</th>
+                                    <th scope="col" class="text-center">KJA</th>
                                     <th scope="col" class="text-center">Petugas</th>
                                     <th scope="col" class="text-center">Aksi</th>
                                 </tr>
@@ -43,6 +44,7 @@
                                         <td class="text-center">{{ $row->pemberian_ke }}</td>
                                         <td class="text-center">{{ $row->jenis_pakan }}</td>
                                         <td class="text-center">{{ $row->berat }}</td>
+                                        <td class="text-center">{{ $row->kja->nomor_kja ?? '-' }}</td>
                                         <td class="text-center">{{ $row->petugas->nama }}</td>
                                         <td class="text-center">
                                             <a href="{{ route($route . 'edit', $row->id) }}"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kja;
 use App\Models\LogPakan;
 use App\Models\Petugas;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class FeedController extends Controller
     public function index()
     {
         $payload['route'] = $this->route;
-        $payload['data'] = LogPakan::with('petugas')->paginate(20);
+        $payload['data'] = LogPakan::with('petugas', 'kja')->paginate(20);
 
         return view($this->view . 'index', $payload);
     }
@@ -39,6 +40,7 @@ class FeedController extends Controller
     {
         $payload['route'] = $this->route;
         $payload['petugas'] = Petugas::get();
+        $payload['kja'] = Kja::get();
         return view($this->view . 'create', $payload);
     }
 
@@ -55,6 +57,7 @@ class FeedController extends Controller
             'jenis_pakan' => 'required|string',
             'berat' => 'required|integer',
             'petugas' => 'required|integer',
+            'kja' => 'required|integer',
         ], [
             'pemberian_ke.required' => 'Pemberian wajib diisi',
             'pemberian_ke.integer' => 'Format Pemberian tidak valid',
@@ -64,6 +67,8 @@ class FeedController extends Controller
             'berat.integer' => 'Format Berat tidak valid',
             'petugas.required' => 'Petugas wajib diisi',
             'petugas.integer' => 'Format Petugas tidak valid',
+            'kja.required' => 'KJA wajib diisi',
+            'kja.integer' => 'Format KJA tidak valid',
         ]);
 
         LogPakan::create([
@@ -71,6 +76,7 @@ class FeedController extends Controller
             'jenis_pakan' => $request->jenis_pakan,
             'berat' => $request->berat,
             'petugas_id' => $request->petugas,
+            'kja_id' => $request->kja,
         ]);
 
         return redirect()->route($this->route . 'index')->with('success', 'store');
@@ -98,6 +104,7 @@ class FeedController extends Controller
         $payload['route'] = $this->route;
         $payload['data'] = LogPakan::findOrFail($id);
         $payload['petugas'] = Petugas::get();
+        $payload['kja'] = Kja::get();
         return view($this->view . 'edit', $payload);
     }
 
@@ -115,6 +122,7 @@ class FeedController extends Controller
             'jenis_pakan' => 'required|string',
             'berat' => 'required|integer',
             'petugas' => 'required|integer',
+            'kja' => 'required|integer',
         ], [
             'pemberian_ke.required' => 'Pemberian wajib diisi',
             'pemberian_ke.integer' => 'Format Pemberian tidak valid',
@@ -124,6 +132,8 @@ class FeedController extends Controller
             'berat.integer' => 'Format Berat tidak valid',
             'petugas.required' => 'Petugas wajib diisi',
             'petugas.integer' => 'Format Petugas tidak valid',
+            'kja.required' => 'KJA wajib diisi',
+            'kja.integer' => 'Format KJA tidak valid',
         ]);
 
         $logPakan = LogPakan::findOrFail($id);
@@ -132,6 +142,7 @@ class FeedController extends Controller
             'jenis_pakan' => $request->jenis_pakan,
             'berat' => $request->berat,
             'petugas_id' => $request->petugas,
+            'kja_id' => $request->kja,
         ]);
 
         return redirect()->route($this->route . 'index')->with('success', 'update');

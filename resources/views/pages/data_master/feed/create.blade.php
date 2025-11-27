@@ -39,6 +39,15 @@
                                     value="{{ old('berat') }}" required min="0" step="0.01">
                             </div>
                             <div class="form-group mb-2">
+                                <label for="kja">KJA</label>
+                                <select name="kja" id="kja" class="form-control" required>
+                                    <option value="">Pilih KJA</option>
+                                    @foreach ($kja as $row)
+                                        <option value="{{ $row->id }}">{{ $row->nomor_kja }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group mb-2">
                                 <label for="petugas">Petugas</label>
                                 <select name="petugas" id="petugas" class="form-control" required>
                                     <option value="">Pilih Petugas</option>
