@@ -14,4 +14,9 @@ class Kja extends Model
     {
         return $this->hasMany(Camera::class);
     }
+
+    public function log_pakans()
+    {
+        return $this->hasMany(LogPakan::class);
+    }
 }
