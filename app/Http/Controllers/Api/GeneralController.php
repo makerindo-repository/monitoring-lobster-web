@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
-
 use App\User;
 use Validator;
 use App\Models\City;
@@ -11,7 +10,6 @@ use App\Models\Sensor;
 use App\Models\IOTNode;
 use App\Models\Treshold;
 use App\Models\RawSensor;
-
 use App\Models\Maintenance;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -24,6 +22,7 @@ use App\Http\Services\GeoJsonService;
 use App\Events\MonitoringTelemetryEvent;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\EdgeComputingResource;
+use App\Models\LogPrediction;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -888,6 +887,15 @@ class GeneralController extends Controller
 
         $total = count($pred);
         $classes = collect($pred)->groupBy('class')->map->count();
+
+        $classPercentage = collect($classes)->map(function ($count) use ($total) {
+            return round(($count / $total) * 100, 2);
+        });
+
+        LogPrediction::create([
+            'raw_prediction' => $pred,
+            'class_percentage' => $classPercentage,
+        ]);
 
         return response()->json([
             'total' => $total,
