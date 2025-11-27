@@ -12,4 +12,9 @@ class LogPakan extends Model
     {
         return $this->belongsTo(Petugas::class);
     }
+
+    public function kja()
+    {
+        return $this->belongsTo(Kja::class);
+    }
 }
