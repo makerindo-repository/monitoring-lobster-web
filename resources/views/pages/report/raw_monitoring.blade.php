@@ -153,12 +153,13 @@
                                             <td align="center">{{ $row->arus }}</td>
                                         </tr>
                                     @empty
-                                        <td colspan="20" class="text-center">-tidak ada data-
-                                        </td>
+                                        <td colspan="20" class="text-center">-tidak ada data-</td>
                                     @endforelse
                                 </tbody>
                             </table>
-
+                            <div class="text-center">
+                                {{ $data->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

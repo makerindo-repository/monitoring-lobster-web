@@ -76,7 +76,7 @@ class ReportController extends Controller
             });
         }
 
-        $payload['data'] = $payload['data']->limit(100)->latest()->get();
+        $payload['data'] = $payload['data']->latest()->paginate(20);
 
         return view('pages.report.raw_monitoring', $payload);
     }
