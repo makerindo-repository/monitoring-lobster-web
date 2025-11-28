@@ -254,24 +254,28 @@
                                         <div class="card p-2" style="background-color: #f1f1f1;">
                                             <p class="m-0">Aktif</p>
                                             <p id="ai-aktif" class="mt-1 fw-bolder fs-5" style="color: #FB9E3A;">0%</p>
+                                            <p class="fst-italic" style="font-size: 0.8rem;">*Lobster mendekati kamera</p>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="card p-2" style="background-color: #f1f1f1;">
                                             <p class="m-0">Pasif</p>
                                             <p id="ai-pasif" class="mt-1 fw-bolder fs-5 text-success">0%</p>
+                                            <p class="fst-italic" style="font-size: 0.8rem;">*Lobster menjauhi kamera</p>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="card p-2" style="background-color: #f1f1f1;">
                                             <p class="m-0">Agresif</p>
                                             <p id="ai-agresif" class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0%</p>
+                                            <p class="fst-italic" style="font-size: 0.8rem;">*Dua lobster berdekatan</p>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="card p-2" style="background-color: #f1f1f1;">
                                             <p class="m-0">Makan</p>
                                             <p id="ai-makan" class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0%</p>
+                                            <p class="fst-italic" style="font-size: 0.8rem;">*Lobster mendekati makanan</p>
                                         </div>
                                     </div>
                                 </div>
