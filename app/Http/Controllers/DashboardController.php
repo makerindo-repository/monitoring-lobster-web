@@ -54,9 +54,14 @@ class DashboardController extends Controller
             $video->where('id_kamera', 'CAM001');
         }
 
-        $payload['video'] = $video->first();
-        
-        $payload['kjas'] = Kja::get(['nomor_kja', 'jumlah_lobster']); 
+        $videoResult = $video->first();
+
+        $payload['video'] = $videoResult;
+
+        $payload['latitude'] = Kja::where('id', $videoResult->kja_id)->first()->latitude;
+        $payload['longitude'] = Kja::where('id', $videoResult->kja_id)->first()->longitude;
+
+        $payload['kjas'] = Kja::get();
 
         $payload['logPakan'] = LogPakan::latest()->paginate(10);
 
