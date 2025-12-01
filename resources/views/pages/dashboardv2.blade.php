@@ -292,15 +292,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Longitude</p>
-                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->longitude }}&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $latitude ?? '-' }}&deg;</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Latitude</p>
-                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->latitude }}&deg;</p>
+                                    <p class="fw-bolder fs-7">{{ (float) $longitude ?? '-' }}&deg;</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Altitude</p>
-                                    <p class="fw-bolder fs-7">{{ (float) $latest_telemetry->altitude }}m</p>
+                                    <p class="fw-bolder fs-7">0mdpl</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Pitch</p>
@@ -332,7 +332,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p class="m-0 text-secondary fs-7">Pressure</p>
-                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->pressure }}hPa</p>
+                                    <p class="fw-bolder fs-7">{{ $latest_telemetry->pressure }}Pa</p>
                                 </div>
                             </div>
                         </div>
