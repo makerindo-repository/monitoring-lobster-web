@@ -224,17 +224,11 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="w-100">
-                                @php
-                                    $encodedUrl = base64_encode($video->ip_kamera);
-                                @endphp
                                 @if (!$video->ip_kamera)
                                     <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture"
                                         class="w-100" style="object-fit: contain;">
                                 @else
-                                    <video id="cameraVideo" class="w-100" style="object-fit: contain;" controls muted
-                                        autoplay crossorigin="anonymous">
-                                        <source src="{{ url('api/stream/' . $encodedUrl) }}" type="video/mp4" />
-                                    </video>
+                                    <video id="cameraVideo" class="w-100" style="object-fit: contain;" controls muted autoplay></video>
 
                                     <canvas id="overlayCanvas"
                                         style="position:absolute; top:0; left:0; pointer-events:none;">
@@ -275,7 +269,8 @@
                                         <div class="card p-2" style="background-color: #f1f1f1;">
                                             <p class="m-0">Makan</p>
                                             <p id="ai-makan" class="mt-1 fw-bolder fs-5" style="color: #3a3afb">0%</p>
-                                            <p class="fst-italic" style="font-size: 0.8rem;">*Lobster mendekati makanan</p>
+                                            <p class="fst-italic" style="font-size: 0.8rem;">*Lobster mendekati makanan
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -413,7 +408,7 @@
 
 @push('footer')
     <script src="{{ asset('js/app.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endpush
@@ -555,7 +550,16 @@
             // Capture tiap 5 detik
             setInterval(captureFrame, 5000);
 
-
+            // Stream video
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource("{{ $video->ip_kamera }}");
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = "{{ $video->ip_kamera }}";
+                video.addEventListener('loadedmetadata', () => video.play());
+            }
         });
     </script>
 @endpush
