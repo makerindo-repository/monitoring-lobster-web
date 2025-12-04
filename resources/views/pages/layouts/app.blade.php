@@ -127,6 +127,10 @@
         .navbar .dropdown-toggle::after {
             border-top-color: white !important;
         }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
     </style>
     @stack('header')
     @stack('style')
