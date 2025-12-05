@@ -228,7 +228,8 @@
                                     <img src="{{ asset('images/dummy-camera.png') }}" alt="Real-Time Capture"
                                         class="w-100" style="object-fit: contain;">
                                 @else
-                                    <video id="cameraVideo" class="w-100" style="object-fit: contain;" controls muted autoplay></video>
+                                    <video id="cameraVideo" class="w-100" style="object-fit: contain;" controls muted
+                                        autoplay></video>
 
                                     <canvas id="overlayCanvas"
                                         style="position:absolute; top:0; left:0; pointer-events:none;">
@@ -550,14 +551,16 @@
             // Capture tiap 5 detik
             setInterval(captureFrame, 5000);
 
+            const srcVideo = "{{ $video->ip_kamera }}"
+
             // Stream video
-            if (Hls.isSupported()) {
+            if (Hls.isSupported() && srcVideo.endsWith('.m3u8')) {
                 const hls = new Hls();
-                hls.loadSource("{{ $video->ip_kamera }}");
+                hls.loadSource(srcVideo);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = "{{ $video->ip_kamera }}";
+            } else {
+                video.src = srcVideo;
                 video.addEventListener('loadedmetadata', () => video.play());
             }
         });
