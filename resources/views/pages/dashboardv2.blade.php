@@ -229,7 +229,7 @@
                                         class="w-100" style="object-fit: contain;">
                                 @else
                                     <video id="cameraVideo" class="w-100" style="object-fit: contain;" controls muted
-                                        autoplay></video>
+                                        autoplay crossorigin="anonymous"></video>
 
                                     <canvas id="overlayCanvas"
                                         style="position:absolute; top:0; left:0; pointer-events:none;">
