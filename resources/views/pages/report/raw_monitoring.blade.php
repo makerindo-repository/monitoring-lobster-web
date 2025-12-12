@@ -25,20 +25,6 @@
                             <form action="" method="GET" id="form-filter">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label for="">Provinsi</label>
-                                        <select name="region_id" placeholder="Pilih Provinsi" autocomplete="off">
-                                            @foreach ($regions as $i => $region)
-                                                <option value="{{ $region->id }}"
-                                                    {{ request('region_id') == $region->id ? 'selected' : '' }}>
-                                                    {{ $region->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="">Kota</label>
-                                        <select name="city_id" autocomplete="off"></select>
-                                    </div>
-                                    <div class="col-md-2">
                                         <label for="">Dari Tanggal</label>
                                         <input type="date" name="date" class="form-control"
                                             value="{{ request('date') }}">
@@ -57,21 +43,6 @@
                                         <label for="">Sampai Jam</label>
                                         <input type="time" name="to_time" class="form-control"
                                             value="{{ request('to_time') }}">
-                                    </div>
-                                    {{-- <div class="col-md-2">
-                                            <label for="">Edge Computing</label>
-                                            <select name="edge_computing_id" class="form-select" disabled>
-                                                <option value="" disabled selected>Edge Computing tidak tersedia</option>
-                                            </select>
-                                        </div> --}}
-                                    <div class="col-md-2">
-                                        <label for="">IoT Node</label>
-                                        <select name="iot_node_id" autocomplete="off">
-                                            <option value="*">Semua</option>
-                                            @foreach ($nodes as $id => $number)
-                                                <option value="{{ $id }}">{{ $number }}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                     <div class="col-12 text-end">
                                         <button type="submut" class="btn text-white mt-4"
