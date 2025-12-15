@@ -582,7 +582,7 @@
 
                     setTimeout(loadHlsStream, RETRY_INTERVAL);
                 } else {
-                    console.error("Retry habis → switch CAM002");
+                    console.error("Retry habis, switch ke CAM002");
                     switchToBackupCam();
                 }
             }
@@ -620,65 +620,6 @@
                 });
                 video.play();
             }
-
-            // // TIMEOUT HANDLER JIKA STREAM TIDAK LOADING DALAM 10 DETIK
-            // function switchToBackupCam() {
-            //     // Ambil current path tanpa query param
-            //     const base = window.location.pathname;
-
-            //     // Redirect ke CAM002
-            //     window.location.href = base + "?camera=CAM002";
-            // }
-
-            // let streamLoaded = false;
-
-            // // Timeout 10 detik
-            // const streamTimeout = setTimeout(() => {
-            //     if (!streamLoaded) {
-            //         console.warn("Stream timeout 10s → switch CAM002");
-            //         switchToBackupCam();
-            //     }
-            // }, 10000);
-
-            // // stream CAM001 (file hls .m3u8)
-            // if (Hls.isSupported() && srcVideo.endsWith('.m3u8')) {
-            //     const hls = new Hls();
-
-            //     hls.loadSource(srcVideo);
-            //     hls.attachMedia(video);
-
-            //     // play stream
-            //     hls.on(Hls.Events.MANIFEST_PARSED, () => {
-            //         video.play();
-            //     });
-
-            //     // jika stream playing, cancel timeout
-            //     video.addEventListener("playing", () => {
-            //         streamLoaded = true;
-            //         clearTimeout(streamTimeout);
-            //         console.log("Stream HLS berhasil playing");
-            //     });
-
-            //     // switch ke CAM002 jika stream error
-            //     hls.on(Hls.Events.ERROR, (event, data) => {
-            //         console.error("HLS Error:", data);
-            //         switchToBackupCam();
-            //     });
-
-            // } else {
-            //     // non-hls (hosted video online)
-            //     video.src = srcVideo;
-
-            //     video.addEventListener("loadedmetadata", () => {
-            //         video.play();
-            //     });
-
-            //     // saat terload, cancel timeout
-            //     video.addEventListener("playing", () => {
-            //         streamLoaded = true;
-            //         clearTimeout(streamTimeout);
-            //     });
-            // }
         });
     </script>
 @endpush
