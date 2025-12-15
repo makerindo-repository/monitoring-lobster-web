@@ -556,6 +556,7 @@
             const RETRY_INTERVAL = 4000; // interval retry 4 detik
 
             let retryCount = 0; // counter retry
+            let streamLoaded = false;
             let hls = null;
 
             function switchToBackupCam() {
