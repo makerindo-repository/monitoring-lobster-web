@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\ActivityLog;
 use App\Models\Region;
@@ -62,18 +62,6 @@ class ReportController extends Controller
 
         if ($request->has('time') && $request->has('to_time') && !empty($request->time) && !empty($request->to_time)) {
             $payload['data'] = $payload['data']->whereBetween(DB::raw('TIME(created_at)'), [$request->time, $request->to_time]);
-        }
-
-        if ($request->has('city_id') && !empty($request->city_id)) {
-            $payload['data'] = $payload['data']->whereHas('iot_node.edge_computing', function ($query) use ($request) {
-                $query->where('city_id', $request->city_id);
-            });
-        }
-
-        if ($request->has('iot_node_id') && !empty($request->iot_node_id) && $request->iot_node_id != "*") {
-            $payload['data'] = $payload['data']->whereHas('iot_node', function ($query) use ($request) {
-                $query->where('id', $request->iot_node_id);
-            });
         }
 
         $payload['data'] = $payload['data']->latest()->paginate(20);
