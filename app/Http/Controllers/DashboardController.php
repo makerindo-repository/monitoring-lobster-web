@@ -64,6 +64,7 @@ class DashboardController extends Controller
         $payload['kjas'] = Kja::get();
 
         $payload['logPakan'] = LogPakan::latest()->paginate(10);
+        $payload['selectedCam'] = Camera::where('id_kamera', request()->query('camera', 'CAM001'))->first();
 
         return view($this->view, $payload);
     }

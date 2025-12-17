@@ -195,7 +195,7 @@
 
         <div class="card p-3 gap-4 mt-4">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold">Kamera Real-Time</h4>
+                <h4 class="fw-bold">Video Kamera {{ $selectedCam->id_kamera == 'CAM001' ? '(Real-Time)' : '(Sampel)'}}</h4>
                 <span class="fw-bolder text-secondary">Terakhir diupdate:
                     {{ $latest_telemetry->created_at->format('d-m-Y H:i:s') }}</span>
             </div>
