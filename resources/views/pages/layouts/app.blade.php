@@ -27,14 +27,14 @@
                     'slug' => 'IOT Node',
                     'route' => route('iot-node.index'),
                 ],
-                [
-                    'slug' => 'Provinsi',
-                    'route' => route('region.index'),
-                ],
-                [
-                    'slug' => 'Kota & Kabupaten',
-                    'route' => route('city.index'),
-                ],
+                // [
+                //     'slug' => 'Provinsi',
+                //     'route' => route('region.index'),
+                // ],
+                // [
+                //     'slug' => 'Kota & Kabupaten',
+                //     'route' => route('city.index'),
+                // ],
                 [
                     'slug' => 'Sensor',
                     'route' => route('sensor.index'),
@@ -77,10 +77,10 @@
                     'slug' => 'Data Raw Monitoring',
                     'route' => route('report.rawMonitoring'),
                 ],
-                [
-                    'slug' => 'Riwayat Maintenance',
-                    'route' => route('report.maintenanceLog'),
-                ],
+                // [
+                //     'slug' => 'Riwayat Maintenance',
+                //     'route' => route('report.maintenanceLog'),
+                // ],
                 [
                     'slug' => 'Log Aktivitas',
                     'route' => route('report.activityLog'),
