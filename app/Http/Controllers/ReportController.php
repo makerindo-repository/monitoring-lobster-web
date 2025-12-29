@@ -64,7 +64,7 @@ class ReportController extends Controller
             $payload['data'] = $payload['data']->whereBetween(DB::raw('TIME(created_at)'), [$request->time, $request->to_time]);
         }
 
-        $payload['data'] = $payload['data']->latest()->paginate(20);
+        $payload['data'] = $payload['data']->latest()->paginate(10);
 
         return view('pages.report.raw_monitoring', $payload);
     }
