@@ -131,6 +131,9 @@
                             <div class="text-center">
                                 {{ $data->links() }}
                             </div>
+                            <div>
+                                <p class="fst-italic"><span class="fw-bold">*Notes: </span> data sensor kualitas air di-update tiap 60 menit.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
